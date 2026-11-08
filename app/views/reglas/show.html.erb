@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @regla %>
+
+<div>
+  <%= link_to "Edit this regla", edit_regla_path(@regla) %> |
+  <%= link_to "Back to reglas", reglas_path %>
+
+  <%= button_to "Destroy this regla", @regla, method: :delete %>
+</div>

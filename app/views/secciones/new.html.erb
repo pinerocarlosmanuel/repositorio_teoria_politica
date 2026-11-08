@@ -1,0 +1,15 @@
+<% content_for :title, "Nueva sección" %>
+
+<div class="dspace-content p-4">
+  <div class="dspace-migas">
+    <%= link_to "Repositorio Teoría Política", root_path %> · <%= link_to "Secciones", secciones_path %> · Nueva sección
+  </div>
+
+  <h1 class="h3 fw-bold mb-3">Nueva sección</h1>
+
+  <%= render "form", seccion: @seccion %>
+
+  <div>
+    <%= link_to "← Volver a secciones", secciones_path, class: "btn btn-outline-primary btn-sm" %>
+  </div>
+</div>

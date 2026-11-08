@@ -1,0 +1,56 @@
+<%= form_with(model: concepto) do |form| %>
+  <% if concepto.errors.any? %>
+    <div class="alert alert-danger">
+      <h5><%= pluralize(concepto.errors.count, "error") %> impidieron guardar:</h5>
+      <ul class="mb-0">
+        <% concepto.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= form.label :termino, class: "form-label" %>
+    <%= form.text_field :termino, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :definicion, class: "form-label" %>
+    <%= form.textarea :definicion, class: "form-control", rows: 3 %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :sinonimos, class: "form-label" %>
+    <%= form.text_field :sinonimos, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :categoria, class: "form-label" %>
+    <%= form.text_field :categoria, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :fuente, class: "form-label" %>
+    <%= form.text_field :fuente, class: "form-control" %>
+    <div class="form-text">Referencia bibliográfica o fuente del contenido.</div>
+  </div>
+  <div class="mb-3">
+    <%= form.label :archivo, "Archivo adjunto", class: "form-label" %>
+    <% if concepto.archivo.attached? && concepto.persisted? %>
+      <div class="mb-1 small text-muted">
+        Archivo actual: <%= link_to concepto.archivo.filename, descargar_concepto_path(concepto) %>
+        (<%= number_to_human_size(concepto.archivo.byte_size) %>). Selecciona uno nuevo para reemplazarlo.
+      </div>
+    <% end %>
+    <%= form.file_field :archivo, class: "form-control", accept: ".pdf,.doc,.docx,.epub,.txt,.ppt,.pptx" %>
+    <div class="form-text">Formatos permitidos: PDF, DOC, DOCX, EPUB, TXT, PPT, PPTX · máx. 50 MB.</div>
+  </div>
+  <div class="mb-3">
+    <%= form.label :estado, class: "form-label" %>
+    <%= form.select :estado, Concepto.estados.map { |k, _| [t("enums.concepto.estado.#{k}"), k] }, {}, class: "form-select" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :tema_id, class: "form-label" %>
+    <%= form.select :tema_id, options_from_collection_for_select(Tema.order(:nombre), :id, :nombre), {}, class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit "Guardar", class: "btn btn-primary" %>
+  </div>
+<% end %>

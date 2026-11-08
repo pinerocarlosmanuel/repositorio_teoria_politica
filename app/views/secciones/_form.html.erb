@@ -1,0 +1,31 @@
+<%= form_with(model: seccion) do |form| %>
+  <% if seccion.errors.any? %>
+    <div class="alert alert-danger">
+      <h5><%= pluralize(seccion.errors.count, "error") %> impidieron guardar:</h5>
+      <ul class="mb-0">
+        <% seccion.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= form.label :clave, class: "form-label" %>
+    <%= form.text_field :clave, class: "form-control",
+                        placeholder: "acerca_de_nosotros, teoria_conspiracion…" %>
+    <div class="form-text">Identificador único usado en las páginas públicas.</div>
+  </div>
+  <div class="mb-3">
+    <%= form.label :titulo, class: "form-label" %>
+    <%= form.text_field :titulo, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :cuerpo, class: "form-label" %>
+    <%= form.textarea :cuerpo, class: "form-control", rows: 8 %>
+    <div class="form-text">Texto de la página (información e introducción).</div>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit "Guardar", class: "btn btn-primary" %>
+  </div>
+<% end %>

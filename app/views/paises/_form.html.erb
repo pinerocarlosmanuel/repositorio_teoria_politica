@@ -1,0 +1,36 @@
+<%= form_with(model: pais) do |form| %>
+  <% if pais.errors.any? %>
+    <div class="alert alert-danger">
+      <h5><%= pluralize(pais.errors.count, "error") %> impidieron guardar:</h5>
+      <ul class="mb-0">
+        <% pais.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= form.label :nombre, class: "form-label" %>
+    <%= form.text_field :nombre, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :continente, class: "form-label" %>
+    <%= form.select :continente, Pais.continentes.map { |k, _| [t("enums.pais.continente.#{k}"), k] }, {}, class: "form-select" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :region, class: "form-label" %>
+    <%= form.text_field :region, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :descripcion, class: "form-label" %>
+    <%= form.textarea :descripcion, class: "form-control", rows: 3 %>
+  </div>
+  <div class="form-check mb-3">
+    <%= form.check_box :destacado, class: "form-check-input" %>
+    <%= form.label :destacado, "Destacado", class: "form-check-label" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit "Guardar", class: "btn btn-primary" %>
+  </div>
+<% end %>

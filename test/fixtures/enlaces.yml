@@ -1,0 +1,13 @@
+enlace_mision:
+  seccion: mision
+  titulo: Spanish Revolutions
+  url: https://spanishrevolutions.com
+  descripcion: Plataforma de referencia.
+  orden: 0
+
+enlace_cia:
+  seccion: teoria_conspiracion
+  titulo: Documentos desclasificados de la CIA
+  url: https://www.cia.gov/readingroom/
+  descripcion: Archivo de documentos desclasificados.
+  orden: 0

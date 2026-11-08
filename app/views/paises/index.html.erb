@@ -1,0 +1,44 @@
+<% content_for :title, "Sistemas por país" %>
+
+<div class="dspace-content p-4">
+  <div class="dspace-migas">
+    <%= link_to "Repositorio Teoría Política", root_path %> · Sistemas
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h1 class="h3 fw-bold mb-0">Sistemas por país</h1>
+    <% if current_user&.editor? || current_user&.admin? %>
+      <%= link_to "Nuevo país", new_pais_path, class: "btn btn-primary btn-sm" %>
+    <% end %>
+  </div>
+  <p class="text-muted">Sistemas políticos, electorales y constitucionales de cada país.</p>
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <% @paises.each do |pais| %>
+      <div class="col">
+        <div class="dspace-comunidad d-flex flex-column">
+          <div class="d-flex justify-content-between align-items-start">
+            <h3><%= link_to pais.nombre, pais %></h3>
+            <% if pais.destacado %>
+              <span class="badge bg-warning text-dark">Destacado</span>
+            <% end %>
+          </div>
+          <div class="small text-muted mb-2">
+            <%= t("enums.pais.continente.#{pais.continente}") %><% if pais.region.present? %> · <%= pais.region %><% end %>
+          </div>
+          <% if pais.descripcion.present? %>
+            <p><%= truncate(pais.descripcion, length: 120) %></p>
+          <% end %>
+          <div class="mt-auto d-flex justify-content-between align-items-center">
+            <span class="badge bg-primary"><%= pluralize(pais.sistemas.size, "sistema", "sistemas") %></span>
+            <%= link_to "Ver sistemas", pais, class: "btn btn-sm btn-outline-primary" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @paises.empty? %>
+    <p class="text-muted">Aún no hay países registrados.</p>
+  <% end %>
+</div>

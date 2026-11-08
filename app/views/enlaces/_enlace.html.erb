@@ -1,0 +1,10 @@
+<div id="<%= dom_id enlace %>">
+  <div>
+    <strong><%= enlace.titulo %></strong>
+    <%= link_to enlace.url, enlace.url, target: "_blank", rel: "noopener" %>
+  </div>
+  <% if enlace.descripcion.present? %>
+    <div class="small text-muted"><%= enlace.descripcion %></div>
+  <% end %>
+  <div class="small text-muted"><%= enlace.seccion.titulo %> · Orden: <%= enlace.orden %></div>
+</div>

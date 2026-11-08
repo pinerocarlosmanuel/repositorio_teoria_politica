@@ -1,0 +1,45 @@
+<% content_for :title, "Enlaces" %>
+
+<div class="dspace-content p-4">
+  <div class="dspace-migas">
+    <%= link_to "Repositorio Teoría Política", root_path %> · Administración
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 fw-bold mb-0">Enlaces del sitio</h1>
+    <%= link_to "Nuevo enlace", new_enlace_path, class: "btn btn-primary btn-sm" %>
+  </div>
+
+  <% if @enlaces.any? %>
+    <div class="table-responsive">
+      <table class="table table-sm align-middle">
+        <thead>
+          <tr>
+            <th>Título</th>
+            <th>Sección</th>
+            <th>URL</th>
+            <th>Orden</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @enlaces.each do |enlace| %>
+            <tr>
+              <td><%= link_to enlace.titulo, enlace %></td>
+              <td><%= enlace.seccion.titulo %></td>
+              <td class="small text-muted"><%= enlace.url %></td>
+              <td><%= enlace.orden %></td>
+              <td class="text-end">
+                <%= link_to "Editar", edit_enlace_path(enlace), class: "btn btn-sm btn-outline-secondary" %>
+                <%= button_to "Eliminar", enlace, method: :delete, class: "btn btn-sm btn-outline-danger",
+                              form: { data: { turbo_confirm: "¿Eliminar este enlace?" } } %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="text-muted">Aún no hay enlaces.</p>
+  <% end %>
+</div>

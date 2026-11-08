@@ -1,0 +1,53 @@
+<% content_for :title, "Cuba: sistemas y particularidades" %>
+
+<h1 class="mb-3">Cuba: sistemas políticos y particularidades</h1>
+<% if @cuba %>
+  <p class="lead"><%= @cuba.descripcion %></p>
+
+  <% @sistemas.each do |sistema| %>
+    <div class="card mb-4">
+      <div class="card-header">
+        <strong>Sistema <%= t("enums.sistema.tipo.#{sistema.tipo}") %></strong>
+        <span class="badge bg-primary ms-2"><%= Sistema.human_attribute_name(:tipo) %></span>
+      </div>
+      <div class="card-body">
+        <p class="mb-3"><%= sistema.descripcion %></p>
+        <h5>Particularidades</h5>
+        <% particulares = Particularidad.where(sistema: sistema).order(:titulo) %>
+        <% if particulares.any? %>
+          <div class="accordion" id="accordion<%= sistema.id %>">
+            <% particulares.each_with_index do |p, i| %>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button <%= "collapsed" unless i.zero? %>" type="button" data-bs-toggle="collapse" data-bs-target="#part<%= p.id %>">
+                    <%= p.titulo %>
+                  </button>
+                </h2>
+                <div id="part<%= p.id %>" class="accordion-collapse collapse <%= "show" if i.zero? %>" data-bs-parent="#accordion<%= sistema.id %>">
+                  <div class="accordion-body">
+                    <p><%= p.descripcion %></p>
+                    <% Variable.where(particularidad: p).order(:nombre).each do |v| %>
+                      <div class="ms-3 mb-2">
+                        <strong><%= v.nombre %></strong>
+                        <% if v.descripcion.present? %><br><small class="text-muted"><%= v.descripcion %></small><% end %>
+                        <% Indicador.where(variable: v).order(:nombre).each do |ind| %>
+                          <div class="ms-3 mt-1"><small>— <%= ind.nombre %>: <%= ind.descripcion %> <span class="text-muted">(<%= ind.metodo %>)</span></small></div>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-muted">Sin particularidades registradas.</p>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <%= link_to "Comparativa de sistemas", comparativa_path, class: "btn btn-outline-primary" %>
+<% else %>
+  <p class="text-muted">No hay país destacado configurado.</p>
+<% end %>

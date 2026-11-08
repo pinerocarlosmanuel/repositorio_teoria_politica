@@ -1,0 +1,29 @@
+<% content_for :title, "Secciones" %>
+
+<div class="dspace-content p-4">
+  <div class="dspace-migas">
+    <%= link_to "Repositorio Teoría Política", root_path %> · Administración
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 fw-bold mb-0">Secciones del sitio</h1>
+    <%= link_to "Nueva sección", new_seccion_path, class: "btn btn-primary btn-sm" %>
+  </div>
+
+  <div class="list-group">
+    <% @secciones.each do |seccion| %>
+      <%= link_to seccion, class: "list-group-item list-group-item-action d-flex justify-content-between align-items-center" do %>
+        <div>
+          <strong><%= seccion.titulo %></strong>
+          <span class="badge bg-secondary ms-2"><%= seccion.clave %></span>
+          <div class="small text-muted"><%= seccion.enlaces.count %> enlaces</div>
+        </div>
+        <span class="small">Ver</span>
+      <% end %>
+    <% end %>
+  </div>
+
+  <% if @secciones.empty? %>
+    <p class="text-muted">Aún no hay secciones.</p>
+  <% end %>
+</div>

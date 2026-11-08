@@ -1,0 +1,53 @@
+<% content_for :title, "Recursos didácticos" %>
+
+<div class="dspace-content p-4">
+  <div class="dspace-migas">
+    <%= link_to "Repositorio Teoría Política", root_path %> · Recursos didácticos
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h1 class="h3 fw-bold mb-0">Recursos didácticos</h1>
+    <% if current_user&.editor? || current_user&.admin? %>
+      <%= link_to "Nuevo recurso", new_recurso_didactico_path, class: "btn btn-primary btn-sm" %>
+    <% end %>
+  </div>
+  <p class="text-muted">Materiales, actividades, bibliografías y enlaces de apoyo a la docencia.</p>
+
+  <% colores = { "material" => "bg-primary", "actividad" => "bg-success", "bibliografia" => "bg-info text-dark", "enlace" => "bg-warning text-dark" } %>
+
+  <div class="row g-3">
+    <% @recurso_didacticos.each do |recurso| %>
+      <div class="col-md-6">
+        <div class="dspace-comunidad d-flex flex-column">
+          <div class="d-flex justify-content-between align-items-start">
+            <h3><%= link_to recurso.titulo, recurso %></h3>
+            <span class="badge <%= colores[recurso.tipo] %>"><%= t("enums.recurso_didactico.tipo.#{recurso.tipo}") %></span>
+          </div>
+          <% if recurso.descripcion.present? %>
+            <p><%= truncate(recurso.descripcion, length: 140) %></p>
+          <% end %>
+          <% if recurso.referencia.present? %>
+            <p class="small text-muted"><strong>Referencia:</strong> <%= recurso.referencia %></p>
+          <% end %>
+          <% if recurso.url.present? %>
+            <p class="small"><%= link_to recurso.url, recurso.url, target: "_blank", rel: "noopener" %></p>
+          <% end %>
+          <div class="mt-auto pt-2 d-flex justify-content-between align-items-center">
+            <% if recurso.archivo.attached? && puede_descargar?(recurso) %>
+              <%= link_to "Descargar #{etiqueta_adjunto(recurso.archivo)}", descargar_recurso_didactico_path(recurso), class: "btn btn-sm btn-outline-primary" %>
+            <% else %>
+              <span></span>
+            <% end %>
+            <span class="small text-muted">
+              <%= t("enums.recurso_didactico.estado.#{recurso.estado}") %>
+            </span>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @recurso_didacticos.empty? %>
+    <p class="text-muted">Aún no hay recursos publicados.</p>
+  <% end %>
+</div>

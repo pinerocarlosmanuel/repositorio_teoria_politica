@@ -1,0 +1,199 @@
+es:
+  roles:
+    visitante: Visitante
+    editor: Editor
+    admin: Administrador
+  enums:
+    concepto:
+      estado:
+        borrador: Borrador
+        publicado: Publicado
+    documento:
+      tipo:
+        articulo: Artículo
+        tesis: Tesis
+        libro: Libro
+        informe: Informe
+        otro: Otro
+      estado:
+        borrador: Borrador
+        publicado: Publicado
+    pais:
+      continente:
+        america: América
+        europa: Europa
+        africa: África
+        asia: Asia
+        oceania: Oceanía
+    sistema:
+      tipo:
+        politico: Político
+        electoral: Electoral
+        constitucional: Constitucional
+    recurso_didactico:
+      tipo:
+        material: Material didáctico
+        actividad: Actividad
+        bibliografia: Bibliografía
+        enlace: Enlace externo
+      estado:
+        borrador: Borrador
+        publicado: Publicado
+    sistema_gobierno:
+      estado:
+        borrador: Borrador
+        publicado: Publicado
+    user:
+      rol:
+        visitante: Visitante
+        editor: Editor
+        admin: Administrador
+  activerecord:
+    models:
+      tema: Tema
+      concepto: Concepto
+      enlace_concepto: Enlace
+      documento: Documento
+      referencia: Referencia
+      pais: País
+      sistema: Sistema
+      particularidad: Particularidad
+      variable: Variable
+      indicador: Indicador
+      regla: Regla
+      chat_log: Registro de chat
+      recurso_didactico: Recurso didáctico
+      sistema_gobierno: Sistema de gobierno
+      enlace_sistema_gobierno: Enlace
+      user: Usuario
+      seccion: Sección
+      enlace: Enlace
+    attributes:
+      tema: &tema
+        nombre: Nombre
+        descripcion: Descripción
+      concepto: &concepto
+        termino: Término
+        definicion: Definición
+        sinonimos: Sinónimos
+        categoria: Categoría
+        fuente: Fuente
+        estado: Estado
+        tema: Tema
+        archivo: Archivo adjunto
+      enlace_concepto: &enlace_concepto
+        titulo: Título
+        url: URL / enlace
+        orden: Orden
+      documento: &documento
+        titulo: Título
+        autores: Autores
+        anio: Año
+        resumen: Resumen
+        referencia: Referencia bibliográfica
+        tipo: Tipo
+        estado: Estado
+        url: URL
+        doi: DOI
+      referencia: &referencia
+        concepto: Concepto
+        documento: Documento
+      pais: &pais
+        nombre: Nombre
+        continente: Continente
+        region: Región
+        descripcion: Descripción
+        destacado: Destacado
+      sistema: &sistema
+        tipo: Tipo de sistema
+        descripcion: Descripción
+        pais: País
+      particularidad: &particularidad
+        titulo: Título
+        descripcion: Descripción
+        sistema: Sistema
+      variable: &variable
+        nombre: Nombre
+        descripcion: Descripción
+        particularidad: Particularidad
+      indicador: &indicador
+        nombre: Nombre
+        descripcion: Descripción
+        metodo: Método de cálculo
+        variable: Variable
+      regla: &regla
+        intent: Intención (intent)
+        keywords: Palabras clave
+        respuesta: Respuesta
+        activa: Activa
+      chat_log: &chat_log
+        pregunta: Consulta
+        respuesta: Respuesta
+        regla: Regla
+        user: Usuario
+      recurso_didactico: &recurso_didactico
+        titulo: Título
+        descripcion: Descripción
+        tipo: Tipo
+        referencia: Referencia
+        url: URL
+        estado: Estado
+      sistema_gobierno: &sistema_gobierno
+        nombre: Nombre
+        etapa: Etapa histórica
+        descripcion: Descripción
+        orden: Orden
+        estado: Estado
+        imagen: Imagen
+      enlace_sistema_gobierno: &enlace_sistema_gobierno
+        titulo: Título
+        url: URL / enlace
+        orden: Orden
+      seccion: &seccion
+        clave: Clave
+        titulo: Título
+        cuerpo: Contenido
+      enlace: &enlace
+        seccion: Sección
+        titulo: Título
+        url: URL
+        descripcion: Descripción
+        orden: Orden
+      user:
+        nombre: Nombre
+        email: Correo electrónico
+        rol: Rol
+        password: Contraseña
+  admin:
+    panel_titulo: Panel de administración
+    panel_descripcion: Qué puede cambiarse en el proyecto y dónde.
+  configuraciones:
+    titulo: Configuración del sitio
+    descripcion: "Menú, página principal, contexto (Acerca de nosotros), ajustes del front y configuración general (patrón labpro_front / labpro_settings)."
+    pestanias:
+      portada: Página principal
+      acerca: Acerca de nosotros
+      menu: Menú
+      ajustes: Ajustes del front
+      front: Configuración general
+    guardar: Guardar cambios
+    campos:
+      empresa: Empresa / nombre del sitio
+      organismo: Organismo
+      proyecto: Proyecto
+      slogan: Slogan
+      tagline: Frase de cabecera (tagline)
+      footer: Texto del pie de página
+      direccion: Dirección
+      email: Correo electrónico
+      telefono: Teléfono
+      facebook: Facebook
+      twitter: Twitter / X
+      youtube: YouTube
+      instagram: Instagram
+      interes1: Enlace de interés 1
+      interes1_url: URL del enlace 1
+      interes2: Enlace de interés 2
+      interes2_url: URL del enlace 2
+      interes3: Enlace de interés 3
+      interes3_url: URL del enlace 3

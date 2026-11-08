@@ -1,0 +1,260 @@
+/* Tema estilo REPOSITORIO DIGITAL (DSpace/REPXOS UCI) */
+
+:root {
+  --dspace-azul: #1f4e79;
+  --dspace-azul-oscuro: #163a5c;
+  --dspace-enlace: #0059b3;
+  --dspace-borde: #d0d0d0;
+  --dspace-fondo: #ffffff;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #f0f2f5;
+  font-family: Helvetica, Arial, sans-serif;
+  color: #333;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+/* ---- Cabecera principal (banner) ---- */
+.dspace-header {
+  background: var(--dspace-azul);
+  border-bottom: 4px solid #ffc107;
+  color: #fff;
+}
+.dspace-header .container { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+.dspace-brand {
+  color: #fff !important;
+  font-size: 1.55rem;
+  font-weight: bold;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+}
+.dspace-logo {
+  height: 48px;
+  width: 48px;
+  object-fit: contain;
+  border-radius: 6px;
+  background: #fff;
+  padding: 2px;
+}
+.dspace-brand:hover { color: #ffd970 !important; }
+.dspace-brand small {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: normal;
+  color: #cfe0f2;
+  letter-spacing: 0.5px;
+}
+.dspace-header .nav-link {
+  color: #dce9f7 !important;
+  font-size: 0.9rem;
+}
+.dspace-header .nav-link:hover { color: #fff !important; }
+.dspace-search .form-control { border-radius: 0; }
+.dspace-search .btn { border-radius: 0; }
+
+/* ---- Menú secundario ---- */
+.dspace-nav {
+  background: var(--dspace-azul-oscuro);
+}
+.dspace-nav .nav-link {
+  color: #dce9f7 !important;
+  font-size: 0.88rem;
+  padding: 0.45rem 0.85rem;
+}
+.dspace-nav .nav-link:hover { background: var(--dspace-azul); color: #fff !important; }
+.dspace-nav .nav-link.active { background: var(--dspace-azul); color: #fff !important; }
+
+/* ---- Contenido ---- */
+.dspace-content { background: var(--dspace-fondo); border: 1px solid var(--dspace-borde); }
+
+/* ---- Portada configurable ---- */
+.dspace-hero {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)),
+    var(--dspace-azul) center/cover;
+  border: 1px solid var(--dspace-borde);
+  border-left: 6px solid var(--dspace-azul);
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.dspace-hero .lead { color: var(--dspace-azul); font-weight: 600; }
+
+/* ---- Facetas "Descubrir por:" ---- */
+.dspace-facet {
+  border: 1px solid var(--dspace-borde);
+  margin-bottom: 1rem;
+  background: #fff;
+}
+.dspace-facet h4 {
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: var(--dspace-azul);
+  margin: 0;
+  padding: 0.6rem 0.85rem;
+  border-bottom: 1px solid var(--dspace-borde);
+  background: #eef3f9;
+}
+.dspace-facet ul { list-style: none; margin: 0; padding: 0.4rem 0.85rem 0.6rem; }
+.dspace-facet li { margin-bottom: 0.3rem; font-size: 0.88rem; }
+.dspace-facet .contador { color: #888; }
+.dspace-facet a { color: var(--dspace-enlace); text-decoration: none; }
+.dspace-facet a:hover { text-decoration: underline; }
+.dspace-facet .mas { font-size: 0.85rem; font-style: italic; }
+
+/* ---- Listado de resultados (estilo REPXOS) ---- */
+.dspace-resultados-tabla { width: 100%; border-collapse: collapse; }
+.dspace-resultados-tabla th {
+  background: #eef3f9;
+  color: var(--dspace-azul);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--dspace-borde);
+}
+.dspace-resultados-tabla td {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--dspace-borde);
+  vertical-align: top;
+  font-size: 0.92rem;
+}
+.dspace-resultados-tabla tr:nth-child(even) td { background: #fafbfc; }
+.dspace-fecha { font-weight: bold; white-space: nowrap; }
+.dspace-titulo { font-weight: bold; color: var(--dspace-azul); text-decoration: none; }
+.dspace-titulo:hover { text-decoration: underline; }
+.dspace-autores { font-style: italic; color: #555; }
+.dspace-resumen { color: #555; font-size: 0.88rem; }
+
+/* ---- Bloques de comunidad ---- */
+.dspace-comunidad {
+  border: 1px solid var(--dspace-borde);
+  border-left: 5px solid var(--dspace-azul);
+  background: #fff;
+  padding: 0.9rem 1rem;
+  height: 100%;
+}
+.dspace-comunidad h3 { font-size: 1.1rem; margin: 0 0 0.3rem; }
+.dspace-comunidad h3 a { color: var(--dspace-azul); text-decoration: none; }
+.dspace-comunidad h3 a:hover { text-decoration: underline; }
+.dspace-comunidad p { margin: 0; font-size: 0.88rem; color: #555; }
+
+/* ---- Migas de pan ---- */
+.dspace-migas { font-size: 0.85rem; color: #777; margin-bottom: 0.5rem; }
+.dspace-migas a { color: var(--dspace-enlace); text-decoration: none; }
+.dspace-migas a:hover { text-decoration: underline; }
+
+/* ---- Pie ---- */
+.dspace-footer {
+  background: var(--dspace-azul-oscuro);
+  color: #cfe0f2;
+  flex-shrink: 0;
+}
+.dspace-footer a { color: #dcebfa; text-decoration: none; }
+.dspace-footer a:hover { color: #fff; text-decoration: underline; }
+.footer-columnas {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 1.5rem;
+  text-align: left;
+  padding: 2rem 0 1rem;
+}
+.footer-bajo {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 1rem;
+}
+@media (max-width: 767px) {
+  .footer-columnas { grid-template-columns: 1fr; }
+}
+
+/* ---- Gráficos de análisis (CSS puro) ---- */
+.analisis-donut {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid #e5e5e5;
+  background: #f4f4f4;
+}
+.analisis-leyenda {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+.analisis-histograma {
+  min-height: 200px;
+}
+.analisis-columna {
+  width: 100%;
+  max-width: 46px;
+  min-height: 4px;
+  margin: 0 auto;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(180deg, #0d6efd, #4f9bf5);
+}
+
+/* ---- Auth / Devise (estilo rutas_historicas) ---- */
+.auth-wrap {
+  min-height: calc(100vh - 150px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  background:
+    radial-gradient(1100px 560px at 50% -12%, rgba(31, 78, 121, 0.10), transparent 60%),
+    radial-gradient(900px 480px at 100% 115%, rgba(255, 193, 7, 0.08), transparent 55%);
+}
+.auth-card {
+  width: 100%;
+  max-width: 340px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  border: 1px solid rgba(28, 36, 48, 0.12);
+}
+.auth-card__brand {
+  text-align: center;
+  padding: 1.5rem 1rem 1rem;
+  background: linear-gradient(135deg, var(--dspace-azul), var(--dspace-azul-oscuro));
+  color: #fff;
+}
+.auth-logo {
+  width: 52px; height: 52px;
+  border-radius: 80%;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+}
+.auth-title { font-size: 1.05rem; margin: 0; color: #fff; font-weight: 700; }
+.auth-sub { margin: 2px 0 0; color: rgba(255, 255, 255, 0.88); font-size: 0.85rem; }
+.auth-body { padding: 1rem; }
+.auth-body .auth-form .form-label { font-weight: 600; font-size: 0.85rem; }
+.auth-body .auth-form .form-control,
+.auth-body .auth-form .form-select { border-radius: 6px; }
+.btn-tp-primary {
+  background-color: var(--dspace-azul);
+  border-color: var(--dspace-azul);
+  color: white;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+.btn-tp-primary:hover {
+  background-color: var(--dspace-azul-oscuro);
+  border-color: var(--dspace-azul-oscuro);
+  color: white;
+}
+.auth-links { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 6px; }
+.auth-links a { color: var(--dspace-enlace); text-decoration: none; font-size: 0.9rem; }
+.auth-links a:hover { text-decoration: underline; }

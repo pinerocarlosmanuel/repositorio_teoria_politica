@@ -1,0 +1,11 @@
+<% content_for :title, "New chat log" %>
+
+<h1>New chat log</h1>
+
+<%= render "form", chat_log: @chat_log %>
+
+<br>
+
+<div>
+  <%= link_to "Back to chat logs", chat_logs_path %>
+</div>

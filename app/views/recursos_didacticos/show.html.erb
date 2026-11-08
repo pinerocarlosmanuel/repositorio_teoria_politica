@@ -1,0 +1,57 @@
+<% content_for :title, @recurso_didactico.titulo %>
+
+<div class="dspace-content p-4">
+  <div class="dspace-migas">
+    <%= link_to "Repositorio Teoría Política", root_path %> · <%= link_to "Recursos didácticos", recursos_didacticos_path %> · <%= @recurso_didactico.titulo %>
+  </div>
+
+  <% colores = { "material" => "bg-primary", "actividad" => "bg-success", "bibliografia" => "bg-info text-dark", "enlace" => "bg-warning text-dark" } %>
+
+  <div class="d-flex justify-content-between align-items-start mb-3">
+    <h1 class="h3 fw-bold mb-0">
+      <%= @recurso_didactico.titulo %>
+      <span class="badge <%= colores[@recurso_didactico.tipo] %> align-middle"><%= t("enums.recurso_didactico.tipo.#{@recurso_didactico.tipo}") %></span>
+    </h1>
+    <% if current_user&.editor? || current_user&.admin? %>
+      <div class="d-flex gap-2">
+        <%= link_to "Editar", edit_recurso_didactico_path(@recurso_didactico), class: "btn btn-outline-secondary btn-sm" %>
+        <%= button_to "Eliminar", @recurso_didactico, method: :delete, class: "btn btn-outline-danger btn-sm",
+                      form: { data: { turbo_confirm: "¿Eliminar este recurso?" } } %>
+      </div>
+    <% end %>
+  </div>
+
+  <% if notice %><p class="alert alert-info py-2"><%= notice %></p><% end %>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <% if @recurso_didactico.descripcion.present? %>
+        <p class="mb-3"><%= simple_format @recurso_didactico.descripcion %></p>
+      <% end %>
+      <dl class="row mb-0 small">
+        <% if @recurso_didactico.referencia.present? %>
+          <dt class="col-sm-3">Referencia</dt>
+          <dd class="col-sm-9"><%= @recurso_didactico.referencia %></dd>
+        <% end %>
+        <% if @recurso_didactico.url.present? %>
+          <dt class="col-sm-3">Enlace</dt>
+          <dd class="col-sm-9"><%= link_to @recurso_didactico.url, @recurso_didactico.url, target: "_blank", rel: "noopener" %></dd>
+        <% end %>
+        <dt class="col-sm-3">Estado</dt>
+        <dd class="col-sm-9"><%= t("enums.recurso_didactico.estado.#{@recurso_didactico.estado}") %></dd>
+        <% if @recurso_didactico.archivo.attached? %>
+          <dt class="col-sm-3">Archivo</dt>
+          <dd class="col-sm-9">
+            <% if puede_descargar?(@recurso_didactico) %>
+              <%= link_to etiqueta_adjunto(@recurso_didactico.archivo), descargar_recurso_didactico_path(@recurso_didactico) %>
+            <% else %>
+              <span class="text-muted"><%= @recurso_didactico.archivo.filename %> (solo disponible para usuarios autorizados)</span>
+            <% end %>
+          </dd>
+        <% end %>
+      </dl>
+    </div>
+  </div>
+
+  <%= link_to "← Volver a recursos didácticos", recursos_didacticos_path, class: "btn btn-outline-primary btn-sm" %>
+</div>

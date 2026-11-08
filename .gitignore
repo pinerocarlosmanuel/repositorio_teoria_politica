@@ -1,0 +1,44 @@
+# See https://help.github.com/articles/ignoring-files for more about ignoring files.
+
+# Ignore environment-specific files.
+/.env*
+!/.env*.erb
+
+# Ignore bundler config and downloaded gems.
+/.bundle
+/vendor/*
+
+# Ignore all environment files (except templates).
+/config/*.local
+/config/*.key
+/config/master.key
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore pidfiles, but keep the directory.
+/tmp/pids/*
+!/tmp/pids/.keep
+
+# Ignore storage (uploads) files.
+/storage/*
+!/storage/.keep
+/tmp/storage/*
+!/tmp/storage/
+!/tmp/storage/.keep
+
+# Ignore ruby-lsp editor support files.
+/.ruby-lsp/
+
+# Ignore editor, IDE and OS files.
+/.idea
+/.vscode
+.DS_Store
+.byebug_history
+
+# Ignore pid files and sockets.
+*.pid
+*.sock

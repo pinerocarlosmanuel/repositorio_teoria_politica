@@ -1,0 +1,107 @@
+<% valores = Configuracion.valores("front") %>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <h2 class="h5 fw-bold">Configuración general del sitio</h2>
+    <p class="text-muted small">Identidad, contacto, redes sociales y enlaces de interés que se muestran en el pie de página.</p>
+
+    <%= form_with url: configuraciones_path, method: :patch, scope: :configuracion do |form| %>
+      <%= hidden_field_tag "configuracion[clave]", "front" %>
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label small fw-semibold">Empresa / nombre del sitio</label>
+          <%= text_field_tag "configuracion[valor][empresa]", valores[:empresa], class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label small fw-semibold">Organismo</label>
+          <%= text_field_tag "configuracion[valor][organismo]", valores[:organismo], class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label small fw-semibold">Proyecto</label>
+          <%= text_field_tag "configuracion[valor][proyecto]", valores[:proyecto], class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label small fw-semibold">Logo (URL)</label>
+          <%= text_field_tag "configuracion[valor][logo]", valores[:logo], class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label small fw-semibold">Eslogan</label>
+          <%= text_field_tag "configuracion[valor][slogan]", valores[:slogan], class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label small fw-semibold">Frase de cabecera (tagline)</label>
+          <%= text_field_tag "configuracion[valor][tagline]", valores[:tagline], class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-12">
+          <label class="form-label small fw-semibold">Texto del pie de página</label>
+          <%= text_area_tag "configuracion[valor][footer]", valores[:footer], rows: 2, class: "form-control form-control-sm" %>
+        </div>
+      </div>
+
+      <h3 class="h6 fw-bold mt-4 mb-2 text-uppercase small">Contacto</h3>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label small fw-semibold">Correo</label>
+          <%= text_field_tag "configuracion[valor][email]", valores[:email], class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label small fw-semibold">Teléfono</label>
+          <%= text_field_tag "configuracion[valor][telefono]", valores[:telefono], class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label small fw-semibold">Dirección</label>
+          <%= text_field_tag "configuracion[valor][direccion]", valores[:direccion], class: "form-control form-control-sm" %>
+        </div>
+      </div>
+
+      <h3 class="h6 fw-bold mt-4 mb-2 text-uppercase small">Redes sociales</h3>
+      <div class="row g-3">
+        <div class="col-md-3">
+          <label class="form-label small fw-semibold">Facebook</label>
+          <%= text_field_tag "configuracion[valor][facebook]", valores[:facebook], class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label small fw-semibold">Twitter / X</label>
+          <%= text_field_tag "configuracion[valor][twitter]", valores[:twitter], class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label small fw-semibold">YouTube</label>
+          <%= text_field_tag "configuracion[valor][youtube]", valores[:youtube], class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label small fw-semibold">Instagram</label>
+          <%= text_field_tag "configuracion[valor][instagram]", valores[:instagram], class: "form-control form-control-sm" %>
+        </div>
+      </div>
+
+      <h3 class="h6 fw-bold mt-4 mb-2 text-uppercase small">Enlaces de interés</h3>
+      <div class="row g-3">
+        <div class="col-md-3">
+          <label class="form-label small fw-semibold">Nombre</label>
+          <%= text_field_tag "configuracion[valor][interes1]", valores[:interes1], class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-9">
+          <label class="form-label small fw-semibold">URL</label>
+          <%= text_field_tag "configuracion[valor][interes1_url]", valores[:interes1_url], class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-3">
+          <%= text_field_tag "configuracion[valor][interes2]", valores[:interes2], class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-9">
+          <%= text_field_tag "configuracion[valor][interes2_url]", valores[:interes2_url], class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-3">
+          <%= text_field_tag "configuracion[valor][interes3]", valores[:interes3], class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-9">
+          <%= text_field_tag "configuracion[valor][interes3_url]", valores[:interes3_url], class: "form-control form-control-sm" %>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <%= form.submit "Guardar cambios", class: "btn btn-primary btn-sm" %>
+      </div>
+    <% end %>
+  </div>
+</div>

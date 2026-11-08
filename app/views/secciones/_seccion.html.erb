@@ -1,0 +1,24 @@
+<div id="<%= dom_id seccion %>" class="pagina-seccion">
+  <% if seccion.cuerpo.present? %>
+    <div class="pagina-cuerpo mb-4"><%= simple_format seccion.cuerpo %></div>
+  <% end %>
+
+  <% if seccion.enlaces_ordenados.any? %>
+    <h2 class="h5 fw-bold mb-3">Enlaces</h2>
+    <div class="list-group">
+      <% seccion.enlaces_ordenados.each do |enlace| %>
+        <%= link_to enlace.url, class: "list-group-item list-group-item-action", target: "_blank", rel: "noopener" do %>
+          <div class="d-flex w-100 justify-content-between align-items-center">
+            <h3 class="h6 mb-1"><%= enlace.titulo %></h3>
+            <span class="small text-muted"><%= enlace.url %></span>
+          </div>
+          <% if enlace.descripcion.present? %>
+            <p class="mb-0 small text-muted"><%= enlace.descripcion %></p>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="text-muted">No hay enlaces publicados todavía.</p>
+  <% end %>
+</div>

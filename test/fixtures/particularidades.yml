@@ -1,0 +1,9 @@
+organizacion_poder:
+  titulo: Organización del poder estatal
+  descripcion: Estructura de los órganos del poder popular.
+  sistema: cuba_politico
+
+presidencia:
+  titulo: Presidencia de la República
+  descripcion: Jefatura del Estado.
+  sistema: cuba_politico

@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Variables" %>
+
+<h1>Variables</h1>
+
+<div id="variables">
+  <% @variables.each do |variable| %>
+    <%= render variable %>
+    <p>
+      <%= link_to "Show this variable", variable %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New variable", new_variable_path %>

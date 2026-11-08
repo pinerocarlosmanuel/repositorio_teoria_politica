@@ -1,0 +1,19 @@
+mision:
+  clave: mision
+  titulo: Misión
+  cuerpo: Misión del repositorio de Teoría Política.
+
+vision:
+  clave: vision
+  titulo: Visión
+  cuerpo: Visión del repositorio de Teoría Política.
+
+estrategia:
+  clave: estrategia
+  titulo: Estrategia
+  cuerpo: Estrategia de desarrollo de la plataforma.
+
+teoria_conspiracion:
+  clave: teoria_conspiracion
+  titulo: Teoría de la conspiración
+  cuerpo: Enlaces de interés para el estudio crítico.

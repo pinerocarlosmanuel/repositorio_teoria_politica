@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Indicadores" %>
+
+<h1>Indicadores</h1>
+
+<div id="indicadores">
+  <% @indicadores.each do |indicador| %>
+    <%= render indicador %>
+    <p>
+      <%= link_to "Show this indicador", indicador %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New indicador", new_indicador_path %>

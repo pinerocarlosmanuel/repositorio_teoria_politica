@@ -1,0 +1,28 @@
+<%= form_with(model: particularidad) do |form| %>
+  <% if particularidad.errors.any? %>
+    <div class="alert alert-danger">
+      <h5><%= pluralize(particularidad.errors.count, "error") %> impidieron guardar:</h5>
+      <ul class="mb-0">
+        <% particularidad.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= form.label :sistema_id, class: "form-label" %>
+    <%= form.select :sistema_id, options_from_collection_for_select(Sistema.all.order(:pais_id), :id, :descripcion), {}, class: "form-select" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :titulo, class: "form-label" %>
+    <%= form.text_field :titulo, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :descripcion, class: "form-label" %>
+    <%= form.textarea :descripcion, class: "form-control", rows: 3 %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit "Guardar", class: "btn btn-primary" %>
+  </div>
+<% end %>

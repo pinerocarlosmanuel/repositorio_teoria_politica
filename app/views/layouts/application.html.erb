@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title><%= content_for(:title) || "Repositorio Teoría Política" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Repositorio Teoría Política">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="icon" href="/favicon.ico?v=3">
+    <link rel="icon" href="/icon.svg?v=3" type="image/svg+xml">
+    <link rel="shortcut icon" href="/favicon.ico?v=3">
+    <link rel="apple-touch-icon" href="/icon.png?v=3">
+    <meta name="theme-color" content="#1f4e79">
+    <link rel="manifest" href="/manifest.json">
+
+    <%# Bootstrap (local, vendored) + tema estilo Repositorio Digital (REPXOS) %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "bootstrap.bundle.min.js", "data-turbo-track": "reload" %>
+
+    <%# Ajustes del front (clave "main"): color, fondos y script configurable %>
+    <%
+      main_cfg = Configuracion.valores("main")
+      dspace_azul = main_cfg[:main_color].presence || "#1f4e79"
+      dspace_oscuro = main_cfg[:objects_background].presence || "#163a5c"
+    %>
+    <style>
+      :root {
+        --dspace-azul: <%= dspace_azul %>;
+        --dspace-azul-oscuro: <%= dspace_oscuro %>;
+      }
+      <% if main_cfg[:bg_image].present? %>
+        body { background-image: url('<%= main_cfg[:bg_image] %>'); background-size: cover; background-attachment: fixed; }
+      <% end %>
+      <% if main_cfg[:bg_phone_image].present? %>
+        @media (max-width: 767.98px) { body { background-image: url('<%= main_cfg[:bg_phone_image] %>'); } }
+      <% end %>
+      <% if main_cfg[:footer_bg_image].present? %>
+        .dspace-footer { background-image: url('<%= main_cfg[:footer_bg_image] %>') !important; background-size: cover; }
+      <% end %>
+    </style>
+  </head>
+
+  <body>
+    <header class="dspace-header">
+      <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+          <div>
+            <%= link_to root_path, class: "dspace-brand d-flex align-items-center gap-2" do %>
+              <% if main_cfg[:logo].present? %>
+                <%= image_tag main_cfg[:logo], alt: "Logo", class: "dspace-logo" %>
+              <% else %>
+                <%= image_tag "MES.jpeg", alt: "MES · Ministerio de Educación Superior", class: "dspace-logo" %>
+              <% end %>
+              <span>
+                <%= front_config(:empresa).presence || "Repositorio Teoría Política" %>
+                <small>
+                  <% if front_config(:organismo).present? %><%= front_config(:organismo) %><% end %>
+                  <% if front_config(:proyecto).present? %> · <%= front_config(:proyecto) %><% end %>
+                </small>
+              </span>
+            <% end %>
+          </div>
+          <div class="d-flex align-items-center gap-3">
+            <%= form_tag buscar_path, method: :get, class: "dspace-search d-flex" do %>
+              <%= search_field_tag :q, params[:q], placeholder: "Buscar…", class: "form-control form-control-sm" %>
+              <%= submit_tag "Buscar", name: nil, class: "btn btn-warning btn-sm" %>
+            <% end %>
+            <% if user_signed_in? %>
+              <span class="navbar-text small">
+                <%= current_user.nombre.presence || current_user.email %> (<%= t("roles.#{current_user.rol}") %>)
+              </span>
+              <%= button_to "Salir", destroy_user_session_path, method: :delete, class: "btn btn-outline-light btn-sm ms-2" %>
+            <% else %>
+              <%= link_to "Iniciar sesión", new_user_session_path, class: "nav-link d-inline small" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <nav class="dspace-nav">
+      <div class="container">
+        <ul class="nav flex-wrap">
+          <% menu_items.each do |item| %>
+            <li class="nav-item"><%= link_to item[:label], item[:url], class: "nav-link" %></li>
+          <% end %>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="container my-4">
+      <% flash.each do |tipo, mensaje| %>
+        <div class="alert alert-<%= tipo == "notice" ? "success" : "danger" %> alert-dismissible fade show">
+          <%= mensaje %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      <% end %>
+      <%= yield %>
+    </main>
+
+    <footer class="dspace-footer mt-4">
+      <div class="container">
+        <div class="footer-columnas">
+          <div>
+            <h2 class="h6 fw-bold text-white mb-2"><%= front_config(:empresa) %></h2>
+            <p class="small mb-1"><%= front_config(:organismo) %> · <%= front_config(:proyecto) %></p>
+            <p class="small mb-0"><%= front_config(:slogan) %></p>
+          </div>
+          <div>
+            <h2 class="h6 fw-bold text-white mb-2">Contacto</h2>
+            <% if front_config(:email).present? %>
+              <p class="small mb-1"><a href="mailto:<%= front_config(:email) %>"><%= front_config(:email) %></a></p>
+            <% end %>
+            <% if front_config(:telefono).present? %>
+              <p class="small mb-1"><%= front_config(:telefono) %></p>
+            <% end %>
+            <% if front_config(:direccion).present? %>
+              <p class="small mb-0"><%= front_config(:direccion) %></p>
+            <% end %>
+          </div>
+          <div>
+            <h2 class="h6 fw-bold text-white mb-2">Síguenos</h2>
+            <% {
+                 facebook: front_config(:facebook),
+                 twitter: front_config(:twitter),
+                 youtube: front_config(:youtube),
+                 instagram: front_config(:instagram)
+               }.each do |red, url| %>
+              <% next if url.blank? %>
+              <p class="small mb-1"><%= link_to red.to_s.titleize, url, target: "_blank", rel: "noopener" %></p>
+            <% end %>
+            <% enlaces_de_interes.each do |etiqueta, url| %>
+              <% next if url.blank? %>
+              <p class="small mb-1"><%= link_to etiqueta, url, target: "_blank", rel: "noopener" %></p>
+            <% end %>
+          </div>
+        </div>
+        <div class="footer-bajo text-center">
+          <small><%= front_config(:footer) %> · 2026.</small>
+        </div>
+      </div>
+    </footer>
+
+    <% if main_cfg[:script].present? %>
+      <%= raw main_cfg[:script] %>
+    <% end %>
+  </body>
+</html>

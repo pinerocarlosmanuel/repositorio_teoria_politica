@@ -1,0 +1,24 @@
+<%= form_with(model: tema) do |form| %>
+  <% if tema.errors.any? %>
+    <div class="alert alert-danger">
+      <h5><%= pluralize(tema.errors.count, "error") %> impidieron guardar:</h5>
+      <ul class="mb-0">
+        <% tema.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= form.label :nombre, class: "form-label" %>
+    <%= form.text_field :nombre, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :descripcion, class: "form-label" %>
+    <%= form.textarea :descripcion, class: "form-control", rows: 3 %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit "Guardar", class: "btn btn-primary" %>
+  </div>
+<% end %>

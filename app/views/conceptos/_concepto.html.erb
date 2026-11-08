@@ -1,0 +1,30 @@
+<div id="<%= dom_id concepto %>">
+  <div>
+    <strong>Término:</strong> <%= concepto.termino %>
+  </div>
+
+  <div>
+    <strong>Definición:</strong> <%= concepto.definicion %>
+  </div>
+
+  <div>
+    <strong>Sinónimos:</strong> <%= concepto.sinonimos %>
+  </div>
+
+  <div>
+    <strong>Categoría:</strong> <%= concepto.categoria %>
+  </div>
+
+  <div>
+    <strong>Fuente:</strong> <%= concepto.fuente %>
+  </div>
+
+  <div>
+    <strong>Estado:</strong> <%= t("enums.concepto.estado.#{concepto.estado}") %>
+  </div>
+
+  <div>
+    <strong>Tema:</strong> <%= concepto.tema&.nombre %>
+  </div>
+
+</div>

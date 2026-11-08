@@ -1,0 +1,28 @@
+<% content_for :title, "Historial del asistente" %>
+
+<h1 class="mb-4">Historial del asistente</h1>
+
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-striped mb-0">
+      <thead class="table-dark">
+        <tr><th>Fecha</th><th>Usuario</th><th>Consulta</th><th>Intención</th><th>Respuesta</th></tr>
+      </thead>
+      <tbody>
+        <% @logs.each do |log| %>
+          <tr>
+            <td class="text-nowrap"><%= l(log.created_at, format: :long) %></td>
+            <td><%= log.user&.nombre || log.user&.email || "—" %></td>
+            <td><%= log.pregunta %></td>
+            <td><%= log.regla&.intent || "fallback" %></td>
+            <td><small class="text-muted"><%= truncate(log.respuesta, length: 90) %></small></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<% if @logs.empty? %>
+  <p class="text-muted mt-3">Aún no hay consultas registradas.</p>
+<% end %>

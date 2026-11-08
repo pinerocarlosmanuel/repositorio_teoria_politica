@@ -1,0 +1,63 @@
+<% valores = Configuracion.valores("main") %>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <h2 class="h5 fw-bold">Ajustes del front</h2>
+    <p class="text-muted small">Imágenes, colores, carrusel y script opcional del front.</p>
+
+    <%= form_with url: configuraciones_path, method: :patch, scope: :configuracion do |form| %>
+      <%= hidden_field_tag "configuracion[clave]", "main" %>
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label small fw-semibold">Logo (URL)</label>
+          <%= text_field_tag "configuracion[valor][logo]", valores[:logo], class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label small fw-semibold">Imagen de fondo (URL)</label>
+          <%= text_field_tag "configuracion[valor][bg_image]", valores[:bg_image], class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label small fw-semibold">Imagen de fondo móvil (URL)</label>
+          <%= text_field_tag "configuracion[valor][bg_phone_image]", valores[:bg_phone_image], class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label small fw-semibold">Imagen de fondo del pie (URL)</label>
+          <%= text_field_tag "configuracion[valor][footer_bg_image]", valores[:footer_bg_image], class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label small fw-semibold">Color principal</label>
+          <%= color_field_tag "configuracion[valor][main_color]", valores[:main_color], class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label small fw-semibold">Fondo de objetos</label>
+          <%= color_field_tag "configuracion[valor][objects_background]", valores[:objects_background], class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label small fw-semibold">Cantidad de bloques</label>
+          <%= number_field_tag "configuracion[valor][blocks_count]", valores[:blocks_count], min: 1, max: 20, class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-12">
+          <div class="form-check form-check-inline">
+            <%= hidden_field_tag "configuracion[valor][carousel]", "0" %>
+            <%= check_box_tag "configuracion[valor][carousel]", "1", valores[:carousel] == "1", class: "form-check-input" %>
+            <label class="form-check-label small">Carrusel</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= hidden_field_tag "configuracion[valor][row]", "0" %>
+            <%= check_box_tag "configuracion[valor][row]", "1", valores[:row] == "1", class: "form-check-input" %>
+            <label class="form-check-label small">Filas de contenido</label>
+          </div>
+        </div>
+        <div class="col-12">
+          <label class="form-label small fw-semibold">Script del front (opcional)</label>
+          <%= text_area_tag "configuracion[valor][script]", valores[:script], rows: 4, class: "form-control form-control-sm", placeholder: "Código que se inserta al final de cada página (solo administradores)." %>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <%= form.submit "Guardar ajustes", class: "btn btn-primary btn-sm" %>
+      </div>
+    <% end %>
+  </div>
+</div>

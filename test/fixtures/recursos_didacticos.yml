@@ -1,0 +1,17 @@
+tic:
+  titulo: Uso de las TIC en la enseñanza de la Teoría Política
+  tipo: 0
+  descripcion: Material sobre Tecnologías de la Información.
+  estado: 1
+
+ciberseguridad:
+  titulo: Ciberseguridad y ciudadanía digital
+  tipo: 3
+  descripcion: Recurso sobre ciberseguridad y educación.
+  estado: 1
+
+borrador_recurso:
+  titulo: Recurso sin publicar
+  tipo: 1
+  descripcion: Borrador.
+  estado: 0

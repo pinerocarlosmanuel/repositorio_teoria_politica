@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @indicador %>
+
+<div>
+  <%= link_to "Edit this indicador", edit_indicador_path(@indicador) %> |
+  <%= link_to "Back to indicadores", indicadores_path %>
+
+  <%= button_to "Destroy this indicador", @indicador, method: :delete %>
+</div>

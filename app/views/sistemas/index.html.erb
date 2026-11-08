@@ -1,0 +1,43 @@
+<% content_for :title, "Sistemas" %>
+
+<div class="dspace-content p-4">
+  <div class="dspace-migas">
+    <%= link_to "Repositorio Teoría Política", root_path %> · Sistemas
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 fw-bold mb-0">Sistemas registrados</h1>
+    <% if current_user&.editor? || current_user&.admin? %>
+      <%= link_to "Nuevo sistema", new_sistema_path, class: "btn btn-primary btn-sm" %>
+    <% end %>
+  </div>
+
+  <% @sistemas.group_by(&:pais).each do |pais, sistemas| %>
+    <div class="dspace-comunidad mb-3">
+      <h3><%= link_to pais.nombre, pais %></h3>
+      <ul class="list-unstyled mb-0">
+        <% sistemas.each do |sistema| %>
+          <li class="d-flex flex-wrap justify-content-between align-items-center py-2 border-top">
+            <div>
+              <span class="badge bg-primary"><%= t("enums.sistema.tipo.#{sistema.tipo}") %></span>
+              <span class="ms-1"><%= sistema.descripcion %></span>
+              <% if sistema.particularidades.any? %>
+                <small class="text-muted ms-2"><%= pluralize(sistema.particularidades.size, "particularidad", "particularidades") %></small>
+              <% end %>
+            </div>
+            <div class="btn-group btn-group-sm">
+              <%= link_to "Ver", sistema, class: "btn btn-outline-primary" %>
+              <% if current_user&.editor? || current_user&.admin? %>
+                <%= link_to "Editar", edit_sistema_path(sistema), class: "btn btn-outline-secondary" %>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if @sistemas.empty? %>
+    <p class="text-muted">Aún no hay sistemas registrados.</p>
+  <% end %>
+</div>

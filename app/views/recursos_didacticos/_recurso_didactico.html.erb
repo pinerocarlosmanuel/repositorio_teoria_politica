@@ -1,0 +1,31 @@
+<div id="<%= dom_id recurso_didactico %>">
+  <div>
+    <strong>Título:</strong> <%= recurso_didactico.titulo %>
+  </div>
+
+  <div>
+    <strong>Descripción:</strong> <%= recurso_didactico.descripcion %>
+  </div>
+
+  <div>
+    <strong>Tipo:</strong> <%= t("enums.recurso_didactico.tipo.#{recurso_didactico.tipo}") %>
+  </div>
+
+  <div>
+    <strong>Referencia:</strong> <%= recurso_didactico.referencia %>
+  </div>
+
+  <div>
+    <strong>URL:</strong> <%= recurso_didactico.url %>
+  </div>
+  <% if recurso_didactico.archivo.attached? && puede_descargar?(recurso_didactico) %>
+  <div>
+    <%= link_to "Descargar #{etiqueta_adjunto(recurso_didactico.archivo)}", descargar_recurso_didactico_path(recurso_didactico), class: "btn btn-primary btn-sm mt-1" %>
+  </div>
+  <% end %>
+
+  <div>
+    <strong>Estado:</strong> <%= t("enums.recurso_didactico.estado.#{recurso_didactico.estado}") %>
+  </div>
+
+</div>

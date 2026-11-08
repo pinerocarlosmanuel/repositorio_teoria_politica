@@ -1,0 +1,28 @@
+<% content_for :title, @seccion.titulo %>
+
+<% if notice %><p class="alert alert-info py-2"><%= notice %></p><% end %>
+
+<div class="dspace-content p-4">
+  <div class="dspace-migas">
+    <%= link_to "Repositorio Teoría Política", root_path %> · <%= link_to "Secciones", secciones_path %> · <%= @seccion.titulo %>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-start mb-3">
+    <h1 class="h3 fw-bold mb-0">
+      <%= @seccion.titulo %>
+      <span class="badge bg-secondary align-middle"><%= @seccion.clave %></span>
+    </h1>
+    <div class="d-flex gap-2">
+      <%= link_to "Editar", edit_seccion_path(@seccion), class: "btn btn-outline-secondary btn-sm" %>
+      <%= button_to "Eliminar", @seccion, method: :delete, class: "btn btn-outline-danger btn-sm",
+                    form: { data: { turbo_confirm: "¿Eliminar esta sección y sus enlaces?" } } %>
+    </div>
+  </div>
+
+  <%= render "secciones/seccion", seccion: @seccion %>
+
+  <div class="mt-3 d-flex gap-2">
+    <%= link_to "Nuevo enlace en esta sección", new_enlace_path(enlace: { seccion_id: @seccion.id }), class: "btn btn-primary btn-sm" %>
+    <%= link_to "← Volver a secciones", secciones_path, class: "btn btn-outline-primary btn-sm" %>
+  </div>
+</div>

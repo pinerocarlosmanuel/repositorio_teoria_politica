@@ -1,0 +1,11 @@
+<% content_for :title, "Nuevo sistema de gobierno" %>
+
+<div class="dspace-content p-4">
+  <div class="dspace-migas">
+    <%= link_to "Repositorio Teoría Política", root_path %> ·
+    <%= link_to "Sistemas", sistemas_path %> · Nuevo sistema
+  </div>
+  <h1 class="h3 fw-bold mb-3">Nuevo sistema de gobierno</h1>
+
+  <%= render "form", sistema_gobierno: @sistema_gobierno %>
+</div>

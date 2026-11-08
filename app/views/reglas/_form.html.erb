@@ -1,0 +1,32 @@
+<%= form_with(model: regla) do |form| %>
+  <% if regla.errors.any? %>
+    <div class="alert alert-danger">
+      <h5><%= pluralize(regla.errors.count, "error") %> impidieron guardar:</h5>
+      <ul class="mb-0">
+        <% regla.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= form.label :intent, class: "form-label" %>
+    <%= form.text_field :intent, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :keywords, class: "form-label" %>
+    <%= form.text_field :keywords, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :respuesta, class: "form-label" %>
+    <%= form.textarea :respuesta, class: "form-control", rows: 3 %>
+  </div>
+  <div class="form-check mb-3">
+    <%= form.check_box :activa, class: "form-check-input" %>
+    <%= form.label :activa, "Activa", class: "form-check-label" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit "Guardar", class: "btn btn-primary" %>
+  </div>
+<% end %>

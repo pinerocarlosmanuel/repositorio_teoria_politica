@@ -1,0 +1,23 @@
+<aside class="dspace-facet">
+  <h4>Descubrir por:</h4>
+  <ul>
+    <li class="fw-bold small text-uppercase text-muted">Autor</li>
+    <% facetas_autores.each do |nombre, n| %>
+      <li><%= link_to nombre, documentos_path(autor: nombre), title: "Filtrar por #{nombre}" %> <span class="contador"><%= n %></span></li>
+    <% end %>
+    <li class="mas"><%= link_to "Siguiente >", documentos_path %></li>
+  </ul>
+  <ul class="border-top">
+    <li class="fw-bold small text-uppercase text-muted">Temática</li>
+    <% facetas_tematicas.each do |tema, n| %>
+      <li><%= link_to tema.upcase, conceptos_path(tema: tema), title: "Filtrar por #{tema}" %> <span class="contador"><%= n %></span></li>
+    <% end %>
+    <li class="mas"><%= link_to "Siguiente >", conceptos_path %></li>
+  </ul>
+  <ul class="border-top">
+    <li class="fw-bold small text-uppercase text-muted">Fecha de lanzamiento</li>
+    <% facetas_fechas.each do |rango, n| %>
+      <li><%= link_to rango, documentos_path(decada: rango), title: "Filtrar por #{rango}" %> <span class="contador"><%= n %></span></li>
+    <% end %>
+  </ul>
+</aside>

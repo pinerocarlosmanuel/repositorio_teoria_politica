@@ -1,0 +1,46 @@
+<div class="card mb-4">
+  <div class="card-body">
+    <h2 class="h5 fw-bold">Secciones públicas</h2>
+    <p class="text-muted small">Las páginas del sitio (Acerca de nosotros, Teoría de la conspiración) se crean y editan aquí.</p>
+
+    <%= form_with url: secciones_path, scope: :seccion do |form| %>
+      <div class="row g-2 align-items-end mb-3">
+        <div class="col-md-3">
+          <label class="form-label small fw-semibold">Clave (identificador)</label>
+          <%= form.text_field :clave, class: "form-control form-control-sm", placeholder: "clave_unica", required: true %>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label small fw-semibold">Título</label>
+          <%= form.text_field :titulo, class: "form-control form-control-sm", required: true %>
+        </div>
+        <div class="col-md-5">
+          <label class="form-label small fw-semibold">Contenido</label>
+          <%= form.text_area :cuerpo, rows: 1, class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-1">
+          <%= form.submit "Crear", class: "btn btn-primary btn-sm w-100" %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="table-responsive">
+      <table class="table table-sm align-middle">
+        <thead>
+          <tr><th>Clave</th><th>Título</th><th class="w-50">Contenido</th><th></th></tr>
+        </thead>
+        <tbody>
+          <% Seccion.order(:clave).each do |seccion| %>
+            <tr>
+              <td><code><%= seccion.clave %></code></td>
+              <td><%= seccion.titulo %></td>
+              <td><%= truncate(seccion.cuerpo.to_s, length: 90) %></td>
+              <td class="text-end">
+                <%= link_to "Editar", edit_seccion_path(seccion), class: "btn btn-sm btn-outline-primary" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

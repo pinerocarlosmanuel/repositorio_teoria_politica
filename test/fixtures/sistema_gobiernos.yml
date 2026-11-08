@@ -1,0 +1,62 @@
+comunismo_primitivo:
+  nombre: Comunismo primitivo
+  etapa: sociedad_primitiva
+  descripcion: Primera forma de organización social sin clases ni propiedad privada.
+  orden: 0
+  estado: publicado
+
+jefatura_tribal:
+  nombre: Jefatura tribal
+  etapa: sociedad_primitiva
+  descripcion: Gobierno de una tribu por un jefe o cacique.
+  orden: 1
+  estado: publicado
+
+capitalismo_tardio:
+  nombre: Capitalismo tardío
+  etapa: capitalismo
+  descripcion: "Fase contemporánea del capitalismo: financiarización global."
+  orden: 10
+  estado: publicado
+
+monarquia_esclavista:
+  nombre: Monarquía esclavista
+  etapa: esclavismo
+  descripcion: Monarquías del mundo antiguo sostenidas en el trabajo esclavo.
+  orden: 1
+  estado: publicado
+
+tecno_oligarquia:
+  nombre: Tecno-oligarquía
+  etapa: no_materializados
+  descripcion: Forma hipotética donde el poder recae en élites tecnológicas.
+  orden: 2
+  estado: publicado
+
+monarquia_feudal:
+  nombre: Monarquía feudal
+  etapa: feudalismo
+  descripcion: Monarquía medieval sostenida por vínculos vasalláticos.
+  orden: 0
+  estado: publicado
+
+monarquia_absoluta:
+  nombre: Monarquía absoluta
+  etapa: absolutismo
+  descripcion: El rey concentra todos los poderes sin rendir cuentas.
+  orden: 0
+  estado: publicado
+
+socialismo_cientifico:
+  nombre: Socialismo científico
+  etapa: socialismo
+  descripcion: Socialismo fundado por Marx y Engels.
+  orden: 1
+  estado: publicado
+
+comunismo:
+  nombre: Comunismo
+  etapa: comunismo
+  descripcion: Sociedad sin clases ni Estado prevista por el marxismo.
+  orden: 0
+  estado: publicado

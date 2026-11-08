@@ -1,0 +1,82 @@
+<p style="color: green"><%= notice %></p>
+
+<% s = @sistema_gobierno %>
+<div class="dspace-content p-4">
+  <div class="dspace-migas">
+    <%= link_to "Repositorio Teoría Política", root_path %> ·
+    <%= link_to "Sistemas", sistemas_path %> · <%= s.nombre %>
+  </div>
+
+  <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+    <h1 class="h3 fw-bold mb-0"><%= s.nombre %></h1>
+    <% if current_user&.editor? || current_user&.admin? %>
+      <div class="d-flex align-items-center gap-2">
+        <%= link_to "Editar", edit_sistemas_gobierno_path(s), class: "btn btn-outline-secondary btn-sm" %>
+        <%= button_to "Eliminar", sistemas_gobierno_path(s), method: :delete,
+            form: { class: "d-inline mb-0" },
+            data: { turbo_confirm: "¿Eliminar '#{s.nombre}'?" },
+            class: "btn btn-outline-danger btn-sm" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="small text-muted mb-3">
+    <span class="badge bg-secondary"><%= SistemaGobierno::ETAPAS.fetch(s.etapa, s.etapa) %></span>
+    <span class="ms-2"><%= t("enums.sistema_gobierno.estado.#{s.estado}") %></span>
+  </div>
+
+  <% if s.imagen.attached? %>
+    <div class="mb-3">
+      <%= image_tag s.imagen, class: "img-fluid rounded border", style: "max-height: 300px" %>
+    </div>
+  <% end %>
+
+  <p><%= simple_format s.descripcion %></p>
+
+  <h2 class="h5 fw-bold border-bottom pb-2 mt-4">Enlaces de interés</h2>
+  <% if s.enlace_sistema_gobiernos.ordenados.any? %>
+    <ul class="list-group mb-3">
+      <% s.enlace_sistema_gobiernos.ordenados.each do |enlace| %>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span>
+            <%= link_to enlace.titulo, enlace.url, target: "_blank", rel: "noopener" %>
+            <span class="small text-muted ms-2"><%= enlace.url %></span>
+          </span>
+          <% if current_user&.editor? || current_user&.admin? %>
+            <%= button_to "Eliminar", enlace, method: :delete,
+                form: { class: "d-inline mb-0" },
+                data: { turbo_confirm: "¿Eliminar el enlace '#{enlace.titulo}'?" },
+                class: "btn btn-sm btn-outline-danger" %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text-muted">Este sistema de gobierno no tiene enlaces todavía.</p>
+  <% end %>
+
+  <% if current_user&.editor? || current_user&.admin? %>
+    <div class="card border-secondary mb-4">
+      <div class="card-header">Añadir un enlace a este sistema</div>
+      <div class="card-body">
+        <%= form_with model: EnlaceSistemaGobierno.new, url: sistemas_gobierno_enlace_sistema_gobiernos_path(s) do |form| %>
+          <div class="row g-2 align-items-center">
+            <div class="col-md-4">
+              <%= form.text_field :titulo, placeholder: "Título del enlace", class: "form-control form-control-sm" %>
+            </div>
+            <div class="col-md-5">
+              <%= form.text_field :url, placeholder: "https://…", class: "form-control form-control-sm" %>
+            </div>
+            <div class="col-md-3">
+              <%= form.submit "Añadir enlace", class: "btn btn-primary btn-sm" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="mt-2">
+    <%= link_to "← Volver a sistemas", sistemas_path, class: "btn btn-outline-primary btn-sm" %>
+  </div>
+</div>

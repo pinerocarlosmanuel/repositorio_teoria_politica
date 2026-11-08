@@ -1,0 +1,31 @@
+ciberseguridad:
+  titulo: Ciberseguridad social desde la tradición CTS
+  autores: Álvarez Tur, J. M.
+  anio: 2026
+  tipo: 0
+  resumen: Propuesta de intervención educativa para Cuba.
+  referencia: Revista Luz (2026).
+  estado: 1
+
+tesis:
+  titulo: La cibersubversión política estadounidense contra Cuba
+  autores: Álvarez Tur, J. M.
+  anio: 2026
+  tipo: 1
+  resumen: Tesis doctoral.
+  estado: 1
+
+estado_doc:
+  titulo: El Estado en la teoría política
+  autores: Bobbio, N.
+  anio: 1989
+  tipo: 2
+  resumen: Análisis del Estado y el poder político.
+  estado: 1
+
+borrador_doc:
+  titulo: Documento sin publicar
+  autores: Anónimo
+  anio: 2025
+  tipo: 0
+  estado: 0

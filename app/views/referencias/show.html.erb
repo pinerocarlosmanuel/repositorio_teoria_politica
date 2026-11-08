@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @referencia %>
+
+<div>
+  <%= link_to "Edit this referencia", edit_referencia_path(@referencia) %> |
+  <%= link_to "Back to referencias", referencias_path %>
+
+  <%= button_to "Destroy this referencia", @referencia, method: :delete %>
+</div>

@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @particularidad %>
+
+<div>
+  <%= link_to "Edit this particularidad", edit_particularidad_path(@particularidad) %> |
+  <%= link_to "Back to particularidades", particularidades_path %>
+
+  <%= button_to "Destroy this particularidad", @particularidad, method: :delete %>
+</div>

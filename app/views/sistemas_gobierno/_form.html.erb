@@ -1,0 +1,60 @@
+<%= form_with model: sistema_gobierno,
+              url: (sistema_gobierno.persisted? ? sistemas_gobierno_path(sistema_gobierno) : sistemas_gobierno_index_path),
+              method: (sistema_gobierno.persisted? ? :patch : :post) do |form| %>
+  <% if sistema_gobierno.errors.any? %>
+    <div class="alert alert-danger">
+      <h5>No se pudo guardar:</h5>
+      <ul class="mb-0">
+        <% sistema_gobierno.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :nombre, class: "form-label" %>
+    <%= form.text_field :nombre, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :etapa, "Etapa histórica / grupo", class: "form-label" %>
+    <%= form.select :etapa, SistemaGobierno::ETAPAS.map { |k, v| [v, k] }, {}, class: "form-select" %>
+    <div class="form-text">Determina en qué sección de la página "Sistemas" aparece la entrada.</div>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :descripcion, class: "form-label" %>
+    <%= form.textarea :descripcion, class: "form-control", rows: 3 %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :imagen, "Imagen", class: "form-label" %>
+    <% if sistema_gobierno.imagen.attached? && sistema_gobierno.imagen.blob.persisted? && sistema_gobierno.persisted? %>
+      <div class="mb-2">
+        <%= image_tag sistema_gobierno.imagen, class: "img-thumbnail", style: "max-height: 120px" %>
+        <div class="small text-muted mt-1">
+          Imagen actual: <%= sistema_gobierno.imagen.filename %>
+          (<%= number_to_human_size(sistema_gobierno.imagen.byte_size) %>). Selecciona una nueva para reemplazarla.
+        </div>
+      </div>
+    <% end %>
+    <%= form.file_field :imagen, class: "form-control", accept: ".png,.jpg,.jpeg,.svg" %>
+    <div class="form-text">Formatos permitidos: PNG, JPEG (JPG) y SVG · máx. 5 MB.</div>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :orden, "Orden dentro de la etapa", class: "form-label" %>
+    <%= form.number_field :orden, class: "form-control", min: 0 %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :estado, class: "form-label" %>
+    <%= form.select :estado, SistemaGobierno.estados.map { |k, _| [t("enums.sistema_gobierno.estado.#{k}"), k] }, {}, class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit "Guardar", class: "btn btn-primary" %>
+    <%= link_to "Cancelar", sistemas_path, class: "btn btn-outline-secondary" %>
+  </div>
+<% end %>

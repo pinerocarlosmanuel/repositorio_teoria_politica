@@ -1,0 +1,74 @@
+front:
+  clave: front
+  valor:
+    empresa: Repositorio Teoría Política
+    organismo: Ministerio de Educación Superior (MES)
+    proyecto: Proyecto NA223LH508-012
+    slogan: Nuevo slogan
+    tagline: Frase de cabecera
+    footer: Pie de página de prueba
+    email: contacto@teoriapolitica.cu
+    telefono: "+53 7800 0000"
+    direccion: La Habana, Cuba
+    facebook: "https://facebook.com/test"
+    twitter: "https://twitter.com/test"
+    youtube: "https://youtube.com/test"
+    instagram: "https://instagram.com/test"
+    interes1: Enlace 1
+    interes1_url: "https://example.com/1"
+    logo: ""
+
+portada:
+  clave: portada
+  valor:
+    titulo: Bienvenido al Repositorio Teoría Política
+    subtitulo: Ministerio de Educación Superior (MES)
+    descripcion: Descripción de la portada de prueba.
+    cta_label: Explorar conceptos
+    cta_url: /conceptos
+    mostrar_carrusel: "1"
+    imagen_fondo: ""
+
+menu:
+  clave: menu
+  valor:
+    menu_logo: ""
+    items:
+      - label: Acerca de nosotros
+        url: /acerca
+      - label: Conceptos
+        url: /conceptos
+      - label: Documentos
+        url: /documentos
+      - label: Sistemas
+        url: /sistemas
+      - label: Cuba
+        url: /cuba
+      - label: Comparativa
+        url: /comparativa
+      - label: Recursos
+        url: /recursos_didacticos
+      - label: Análisis
+        url: /analisis
+      - label: Chatbot
+        url: /chat
+      - label: Teoría de la conspiración
+        url: /teoria_de_la_conspiracion
+      - label: Administración
+        url: /administracion
+      - label: Nuevo concepto
+        url: /conceptos/new
+
+main:
+  clave: main
+  valor:
+    logo: ""
+    bg_image: ""
+    bg_phone_image: ""
+    footer_bg_image: ""
+    carousel: "0"
+    row: "1"
+    blocks_count: "5"
+    main_color: "#1f4e79"
+    objects_background: "#163a5c"
+    script: ""

@@ -1,0 +1,18 @@
+<div id="<%= dom_id chat_log %>">
+  <div>
+    <strong>Consulta:</strong> <%= chat_log.pregunta %>
+  </div>
+
+  <div>
+    <strong>Respuesta:</strong> <%= chat_log.respuesta %>
+  </div>
+
+  <div>
+    <strong>Regla:</strong> <%= chat_log.regla&.intent %>
+  </div>
+
+  <div>
+    <strong>User:</strong> <%= chat_log.user&.nombre %>
+  </div>
+
+</div>

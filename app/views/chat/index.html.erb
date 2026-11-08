@@ -1,0 +1,71 @@
+<% content_for :title, "Asistente Teoría Política" %>
+
+<h1 class="mb-4">Asistente de consultas</h1>
+<% if current_user&.admin? %><%= link_to "Historial", historial_chat_index_path, class: "btn btn-outline-secondary btn-sm mb-3" %><% end %>
+<p class="text-muted">Pregunta sobre conceptos, documentos, sistemas políticos o recursos didácticos.</p>
+
+<div class="row">
+  <div class="col-lg-8">
+    <div class="card mb-3">
+      <div class="card-body" id="chatHistorial" style="min-height: 300px; max-height: 420px; overflow-y: auto;">
+        <p class="text-muted fst-italic" id="chatVacio">Escribe tu consulta para comenzar…</p>
+      </div>
+      <div class="card-footer">
+        <form id="formConsulta" class="d-flex gap-2">
+          <input type="text" name="pregunta" id="pregunta" class="form-control" placeholder="Ej.: ¿Qué es la hegemonía?" autocomplete="off" required>
+          <button type="submit" class="btn btn-primary">Consultar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card">
+      <div class="card-header">Consultas de ejemplo</div>
+      <ul class="list-group list-group-flush">
+        <% @ejemplos.each do |ejemplo| %>
+          <li class="list-group-item">
+            <button type="button" class="btn btn-link p-0 text-decoration-none" data-consulta="<%= ejemplo %>"><%= ejemplo %></button>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  function anadirMensaje(quien, texto) {
+    const cont = document.getElementById("chatHistorial");
+    const vacio = document.getElementById("chatVacio");
+    if (vacio) vacio.remove();
+    const div = document.createElement("div");
+    div.className = "mb-2 " + (quien === "usuario" ? "text-end" : "");
+    div.innerHTML = '<div class="d-inline-block p-2 rounded ' + (quien === "usuario" ? "bg-primary text-white" : "bg-light border") + '" style="max-width: 85%; white-space: pre-wrap;">' + texto.replace(/&/g, "&amp;").replace(/</g, "&lt;") + "</div>";
+    cont.appendChild(div);
+    cont.scrollTop = cont.scrollHeight;
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("formConsulta").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const entrada = document.getElementById("pregunta");
+      const pregunta = entrada.value.trim();
+      if (!pregunta) return;
+      anadirMensaje("usuario", pregunta);
+      entrada.value = "";
+      fetch("<%= consultar_chat_index_path %>", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content },
+        body: JSON.stringify({ pregunta: pregunta })
+      })
+        .then(r => r.json())
+        .then(d => anadirMensaje("bot", d.respuesta));
+    });
+    document.querySelectorAll("[data-consulta]").forEach(b => {
+      b.addEventListener("click", function () {
+        document.getElementById("pregunta").value = this.dataset.consulta;
+        document.getElementById("formConsulta").requestSubmit();
+      });
+    });
+  });
+</script>

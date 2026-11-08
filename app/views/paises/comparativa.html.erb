@@ -1,0 +1,39 @@
+<% content_for :title, "Comparativa de sistemas" %>
+
+<h1 class="mb-4">Comparativa de sistemas por país</h1>
+
+<div class="table-responsive">
+  <table class="table table-striped align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>País</th>
+        <% @tipos_sistema.each do |tipo| %>
+          <th>Sistema <%= t("enums.sistema.tipo.#{tipo}") %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @paises.each do |pais| %>
+        <tr>
+          <td>
+            <strong><%= link_to pais.nombre, pais %></strong>
+            <small class="d-block text-muted"><%= t("enums.pais.continente.#{pais.continente}") %> · <%= pais.region %></small>
+          </td>
+          <% @tipos_sistema.each do |tipo| %>
+            <td>
+              <% datos = @por_pais[pais.id].find { |t, _| t == tipo } %>
+              <% if datos %>
+                <span class="badge bg-success"><%= t("enums.sistema.tipo.#{tipo}") %></span>
+                <small class="d-block mt-1"><%= datos[1] %></small>
+              <% else %>
+                <span class="text-muted">—</span>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= link_to "Cuba: sistemas y particularidades", cuba_path, class: "btn btn-outline-primary" %>

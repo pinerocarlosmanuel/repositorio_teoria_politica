@@ -1,0 +1,37 @@
+<%= form_with(model: chat_log) do |form| %>
+  <% if chat_log.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(chat_log.errors.count, "error") %> prohibited this chat_log from being saved:</h2>
+
+      <ul>
+        <% chat_log.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :pregunta, style: "display: block" %>
+    <%= form.text_field :pregunta %>
+  </div>
+
+  <div>
+    <%= form.label :respuesta, style: "display: block" %>
+    <%= form.textarea :respuesta %>
+  </div>
+
+  <div>
+    <%= form.label :regla_id, style: "display: block" %>
+    <%= form.text_field :regla_id %>
+  </div>
+
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,31 @@
+<% content_for :title, "Configuración del sitio" %>
+
+<div class="dspace-content p-4">
+  <div class="dspace-migas">
+    <%= link_to "Repositorio Teoría Política", root_path %> · <%= link_to "Administración", administracion_path %> · Configuración
+  </div>
+
+  <h1 class="h3 fw-bold mb-1">Administración del sitio</h1>
+  <p class="text-muted">Todo lo que el administrador maneja, en pestañas: página principal, menú, contexto, ajustes del front, configuración general, usuarios, secciones y enlaces (patrón labpro_front / labpro_settings).</p>
+
+  <ul class="nav nav-tabs mt-3">
+    <% {
+         "portada" => "Página principal",
+         "acerca" => "Acerca de nosotros",
+         "menu" => "Menú",
+         "ajustes" => "Ajustes del front",
+         "front" => "Configuración general",
+         "usuarios" => "Usuarios",
+         "secciones" => "Secciones",
+         "enlaces" => "Enlaces"
+       }.each do |clave, etiqueta| %>
+      <li class="nav-item">
+        <%= link_to etiqueta, configuraciones_path(seccion: clave), class: "nav-link #{@seccion == clave ? 'active fw-bold' : ''}" %>
+      </li>
+    <% end %>
+  </ul>
+
+  <div class="pt-4">
+    <%= render "configuraciones/#{@seccion}" %>
+  </div>
+</div>

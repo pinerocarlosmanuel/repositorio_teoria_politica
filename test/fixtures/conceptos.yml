@@ -1,0 +1,33 @@
+poder:
+  termino: Poder político
+  definicion: Capacidad de imponer decisiones sobre otros en la sociedad política.
+  sinonimos: autoridad; dominación
+  categoria: Política
+  estado: 1
+  fuente: Bobbio, N. (1989).
+  tema: estado
+
+soberania:
+  termino: Soberanía
+  definicion: Atributo del poder estatal que no reconoce poder superior.
+  sinonimos: autonomía
+  categoria: Política
+  estado: 1
+  fuente: Bodin, J. (1576).
+  tema: estado
+
+hegemonia:
+  termino: Hegemonía
+  definicion: Dirección política e ideológica de un bloque social.
+  sinonimos: dominación ideológica
+  categoria: Política
+  estado: 1
+  fuente: Gramsci, A. (1929).
+  tema: poder
+
+borrador:
+  termino: Concepto borrador
+  definicion: Contenido no publicado.
+  categoria: Prueba
+  estado: 0
+  tema: poder

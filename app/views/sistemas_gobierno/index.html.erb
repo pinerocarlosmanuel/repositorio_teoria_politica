@@ -1,0 +1,62 @@
+<% content_for :title, "Sistemas de gobierno" %>
+
+<div class="dspace-content p-4">
+  <div class="dspace-migas">
+    <%= link_to "Repositorio Teoría Política", root_path %> · Sistemas
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h1 class="h3 fw-bold mb-0">Sistemas de gobierno a lo largo de la historia</h1>
+    <% if current_user&.editor? || current_user&.admin? %>
+      <%= link_to "Nuevo sistema", new_sistemas_gobierno_path, class: "btn btn-primary btn-sm" %>
+    <% end %>
+  </div>
+  <p class="text-muted">
+    Tipos de sistemas de gobierno que han existido desde la sociedad primitiva hasta
+    aquellos que nunca se han podido materializar (como el comunismo pleno), incluidas
+    las ramas en que se divide el capitalismo y otras formas como la tecno-oligarquía.
+  </p>
+
+  <% @por_etapa.each do |etapa, sistemas| %>
+    <section class="mt-4">
+      <h2 class="h5 fw-bold text-uppercase border-bottom pb-2">
+        <%= SistemaGobierno::ETAPAS.fetch(etapa, etapa) %>
+      </h2>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mt-1">
+        <% sistemas.each do |s| %>
+          <div class="col">
+            <div class="dspace-comunidad d-flex flex-column h-100">
+              <div class="d-flex justify-content-between align-items-start">
+                <h3 class="h6"><%= s.nombre %></h3>
+                <% if current_user&.editor? || current_user&.admin? %>
+                  <span class="badge bg-secondary"><%= s.etapa %></span>
+                <% end %>
+              </div>
+              <% if s.imagen.attached? %>
+                <div class="mb-2 text-center">
+                  <%= image_tag s.imagen, class: "img-fluid rounded border", style: "max-height: 180px; object-fit: cover;" %>
+                </div>
+              <% end %>
+              <% if s.descripcion.present? %>
+                <p class="small flex-grow-1"><%= s.descripcion %></p>
+              <% end %>
+              <% if current_user&.editor? || current_user&.admin? %>
+                <div class="d-flex justify-content-end gap-1">
+                  <%= link_to "Editar", edit_sistemas_gobierno_path(s), class: "btn btn-sm btn-outline-secondary" %>
+                  <%= button_to "Eliminar", sistemas_gobierno_path(s), method: :delete,
+                      form: { class: "d-inline mb-0" },
+                      data: { turbo_confirm: "¿Eliminar '#{s.nombre}'?" },
+                      class: "btn btn-sm btn-outline-danger" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+
+  <% if @sistemas.empty? %>
+    <p class="text-muted">Aún no hay sistemas de gobierno registrados.</p>
+  <% end %>
+</div>

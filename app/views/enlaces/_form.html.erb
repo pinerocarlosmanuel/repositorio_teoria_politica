@@ -1,0 +1,39 @@
+<%= form_with(model: enlace) do |form| %>
+  <% if enlace.errors.any? %>
+    <div class="alert alert-danger">
+      <h5><%= pluralize(enlace.errors.count, "error") %> impidieron guardar:</h5>
+      <ul class="mb-0">
+        <% enlace.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= form.label :seccion, class: "form-label" %>
+    <%= form.collection_select :seccion_id, Seccion.order(:titulo), :id, :titulo,
+                               { prompt: "Selecciona una sección" }, class: "form-select" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :titulo, class: "form-label" %>
+    <%= form.text_field :titulo, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :url, class: "form-label" %>
+    <%= form.url_field :url, class: "form-control",
+                       placeholder: "https://…" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :descripcion, class: "form-label" %>
+    <%= form.textarea :descripcion, class: "form-control", rows: 3 %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :orden, class: "form-label" %>
+    <%= form.number_field :orden, class: "form-control", min: 0 %>
+    <div class="form-text">Posición dentro de la sección (menor = primero).</div>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit "Guardar", class: "btn btn-primary" %>
+  </div>
+<% end %>

@@ -1,0 +1,14 @@
+<div id="<%= dom_id sistema %>">
+  <div>
+    <strong>Tipo:</strong> <%= t("enums.sistema.tipo.#{sistema.tipo}") %>
+  </div>
+
+  <div>
+    <strong>Descripción:</strong> <%= sistema.descripcion %>
+  </div>
+
+  <div>
+    <strong>Pais:</strong> <%= sistema.pais&.nombre %>
+  </div>
+
+</div>

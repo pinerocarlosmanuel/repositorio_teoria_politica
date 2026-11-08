@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @sistema %>
+
+<div>
+  <%= link_to "Edit this sistema", edit_sistema_path(@sistema) %> |
+  <%= link_to "Back to sistemas", sistemas_path %>
+
+  <%= button_to "Destroy this sistema", @sistema, method: :delete %>
+</div>

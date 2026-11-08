@@ -1,0 +1,24 @@
+<%= form_with(model: referencia) do |form| %>
+  <% if referencia.errors.any? %>
+    <div class="alert alert-danger">
+      <h5><%= pluralize(referencia.errors.count, "error") %> impidieron guardar:</h5>
+      <ul class="mb-0">
+        <% referencia.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= form.label :concepto_id, class: "form-label" %>
+    <%= form.select :concepto_id, options_from_collection_for_select(Concepto.publicados.order(:termino), :id, :termino), {}, class: "form-select" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :documento_id, class: "form-label" %>
+    <%= form.select :documento_id, options_from_collection_for_select(Documento.publicados.order(:titulo), :id, :titulo), {}, class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit "Guardar", class: "btn btn-primary" %>
+  </div>
+<% end %>

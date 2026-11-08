@@ -1,0 +1,63 @@
+<%= form_with(model: documento) do |form| %>
+  <% if documento.errors.any? %>
+    <div class="alert alert-danger">
+      <h5><%= pluralize(documento.errors.count, "error") %> impidieron guardar:</h5>
+      <ul class="mb-0">
+        <% documento.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= form.label :titulo, class: "form-label" %>
+    <%= form.text_field :titulo, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :autores, class: "form-label" %>
+    <%= form.text_field :autores, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :anio, class: "form-label" %>
+    <%= form.number_field :anio, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :resumen, class: "form-label" %>
+    <%= form.textarea :resumen, class: "form-control", rows: 3 %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :referencia, class: "form-label" %>
+    <%= form.textarea :referencia, class: "form-control", rows: 3 %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :tipo, class: "form-label" %>
+    <%= form.select :tipo, Documento.tipos.map { |k, _| [t("enums.documento.tipo.#{k}"), k] }, {}, class: "form-select" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :estado, class: "form-label" %>
+    <%= form.select :estado, Documento.estados.map { |k, _| [t("enums.documento.estado.#{k}"), k] }, {}, class: "form-select" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :url, class: "form-label" %>
+    <%= form.text_field :url, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :doi, class: "form-label" %>
+    <%= form.text_field :doi, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :archivo, "Archivo adjunto", class: "form-label" %>
+    <% if documento.archivo.attached? && documento.persisted? %>
+      <div class="mb-1 small text-muted">
+        Archivo actual: <%= link_to documento.archivo.filename, descargar_documento_path(documento) %>
+        (<%= number_to_human_size(documento.archivo.byte_size) %>). Selecciona uno nuevo para reemplazarlo.
+      </div>
+    <% end %>
+    <%= form.file_field :archivo, class: "form-control", accept: ".pdf,.doc,.docx,.epub,.txt,.ppt,.pptx" %>
+    <div class="form-text">Formatos permitidos: PDF, DOC, DOCX, EPUB, TXT, PPT, PPTX · máx. 50 MB.</div>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit "Guardar", class: "btn btn-primary" %>
+  </div>
+<% end %>

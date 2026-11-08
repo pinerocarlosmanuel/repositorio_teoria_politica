@@ -1,0 +1,11 @@
+admin:
+  email: admin@proyecto.cu
+  encrypted_password: $2a$04$EkZ7BZjXlB94bG1AH3Hwi.ZpymuriJoFm8psPeEEXpqccaiR6vDyW
+  nombre: Administrador
+  rol: 2
+
+editor:
+  email: editor@proyecto.cu
+  encrypted_password: $2a$04$EkZ7BZjXlB94bG1AH3Hwi.ZpymuriJoFm8psPeEEXpqccaiR6vDyW
+  nombre: Editor
+  rol: 1

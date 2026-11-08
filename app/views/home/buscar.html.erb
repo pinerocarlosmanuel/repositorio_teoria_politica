@@ -1,0 +1,48 @@
+<% content_for :title, "Buscar" %>
+
+<div class="row">
+  <div class="col-lg-9">
+    <div class="dspace-content p-4">
+      <div class="dspace-migas">
+        <%= link_to "Repositorio Teoría Política", root_path %> · Buscar
+      </div>
+
+      <h1 class="h3 fw-bold">Buscar</h1>
+      <p class="text-muted small">
+        <%= @q.present? ? "Resultados para «#{@q}» en todo el repositorio." : "Escribe un término para buscar en todo el repositorio." %>
+      </p>
+
+      <% if @q.present? && [@conceptos, @documentos, @paises, @recursos].all?(&:empty?) %>
+        <div class="alert alert-info">Sin resultados para «<%= @q %>».</div>
+      <% end %>
+
+      <% [["Conceptos", @conceptos], ["Documentos", @documentos],
+          ["Países", @paises], ["Recursos didácticos", @recursos]].each do |titulo, items| %>
+        <% next if items.empty? %>
+        <h2 class="h5 fw-bold mt-4"><%= titulo %> <span class="text-muted small">(<%= items.size %>)</span></h2>
+        <table class="dspace-resultados-tabla mb-4">
+          <tbody>
+            <% items.each do |item| %>
+              <tr>
+                <td style="width: 20%" class="dspace-fecha">
+                  <% if item.is_a?(Documento) %><%= item.anio || "s/f" %>
+                  <% elsif item.is_a?(Concepto) %><%= item.tema&.nombre %>
+                  <% elsif item.is_a?(RecursoDidactico) %><%= t("enums.recurso_didactico.tipo.#{item.tipo}") %>
+                  <% else %><%= t("enums.pais.continente.#{item.continente}") %><% end %>
+                </td>
+                <td>
+                  <%= link_to item_titulo(item), item, class: "dspace-titulo" %>
+                  <div class="dspace-resumen"><%= truncate(item_resumen(item), length: 160) %></div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-lg-3">
+    <%= render "shared/descubrir" %>
+  </div>
+</div>

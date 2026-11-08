@@ -1,0 +1,56 @@
+<% content_for :title, "Página de inicio" %>
+
+<div class="row">
+  <div class="col-lg-9">
+    <div class="dspace-content p-4">
+      <div class="dspace-migas">Repositorio Digital</div>
+
+      <% if front_config(:mostrar_carrusel, "portada") == "1" %>
+        <div class="dspace-hero" <% if front_config(:imagen_fondo, "portada").present? %>style="background-image:url('<%= front_config(:imagen_fondo, "portada") %>'); background-size:cover; background-position:center;"<% end %>>
+          <h1 class="h3 fw-bold mb-1"><%= front_config(:titulo, "portada") %></h1>
+          <% if front_config(:subtitulo, "portada").present? %>
+            <p class="lead mb-1"><%= front_config(:subtitulo, "portada") %></p>
+          <% end %>
+          <p class="text-muted"><%= front_config(:descripcion, "portada") %></p>
+          <% if front_config(:cta_label, "portada").present? %>
+            <%= link_to front_config(:cta_label, "portada"), front_config(:cta_url, "portada"), class: "btn btn-primary btn-sm" %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <h2 class="h4 mt-4 mb-3">Comunidades</h2>
+      <p class="text-muted small">Elija una comunidad para visualizar sus colecciones.</p>
+      <div class="row g-3 mb-4">
+        <% Documento.publicados.group(:tipo).count.each do |tipo, n| %>
+          <div class="col-md-6">
+            <div class="dspace-comunidad">
+              <h3><%= link_to t("enums.documento.tipo.#{tipo}"), documentos_path(tipo: tipo) %></h3>
+              <p><%= n %> documento<%= "s" unless n == 1 %> · <%= link_to "Ver colección", documentos_path(tipo: tipo) %></p>
+            </div>
+          </div>
+        <% end %>
+        <div class="col-md-6">
+          <div class="dspace-comunidad">
+            <h3><%= link_to "Conceptos (Materias)", conceptos_path %></h3>
+            <p><%= @total_conceptos %> conceptos publicados · <%= link_to "Ver colección", conceptos_path %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-md-4"><%= link_to "Sistemas políticos", paises_path, class: "btn btn-outline-primary w-100" %></div>
+        <div class="col-md-4"><%= link_to "Cuba: sistemas y particularidades", cuba_path, class: "btn btn-outline-primary w-100" %></div>
+        <div class="col-md-4"><%= link_to "Comparativa", comparativa_path, class: "btn btn-outline-primary w-100" %></div>
+      </div>
+      <div class="row g-3 mt-1">
+        <div class="col-md-4"><%= link_to "Recursos TIC/TEP/TAC/IA", recursos_didacticos_path, class: "btn btn-outline-primary w-100" %></div>
+        <div class="col-md-4"><%= link_to "Análisis", analisis_path, class: "btn btn-outline-primary w-100" %></div>
+        <div class="col-md-4"><%= link_to "Chatbot", chat_index_path, class: "btn btn-outline-primary w-100" %></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-3">
+    <%= render "shared/descubrir" %>
+  </div>
+</div>

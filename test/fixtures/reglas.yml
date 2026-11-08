@@ -1,0 +1,35 @@
+definicion_concepto:
+  intent: definicion_concepto
+  keywords: que es;que significa;definicion;que se entiende por
+  respuesta: Te explicaré el concepto solicitado.
+  activa: true
+
+documentos_tema:
+  intent: documentos_tema
+  keywords: documentos;hay documentos;articulos;literatura
+  respuesta: Te muestro los documentos relacionados.
+  activa: true
+
+sistema_pais:
+  intent: sistema_pais
+  keywords: sistema;electoral;constitucional;politico
+  respuesta: Te muestro el sistema del país mencionado.
+  activa: true
+
+recursos_tic:
+  intent: recursos_tic
+  keywords: tic;tep;tac;inteligencia artificial;redes sociales;ciberseguridad;recursos
+  respuesta: Te muestro recursos didácticos relacionados.
+  activa: true
+
+informacion_general:
+  intent: informacion_general
+  keywords: hola;buenas;saludos;ayuda;que puedes hacer
+  respuesta: Hola, soy el asistente del repositorio.
+  activa: true
+
+agradecimiento:
+  intent: agradecimiento
+  keywords: gracias;genial;perfecto
+  respuesta: ¡De nada!
+  activa: true

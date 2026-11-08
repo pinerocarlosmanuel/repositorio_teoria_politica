@@ -1,0 +1,105 @@
+<% content_for :title, "Conceptos" %>
+
+<div class="row">
+  <div class="col-lg-9">
+    <div class="dspace-content p-4">
+      <div class="dspace-migas">
+        <%= link_to "Repositorio Teoría Política", root_path %> · Conceptos
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h1 class="h3 fw-bold mb-0">Conceptos de la Teoría Política</h1>
+        <% if current_user&.editor? || current_user&.admin? %>
+          <%= link_to "Nuevo concepto", new_concepto_path, class: "btn btn-primary btn-sm" %>
+        <% end %>
+      </div>
+
+      <% if params[:tema].present? || params[:q].present? %>
+        <p class="small mb-2">
+          Filtros activos:
+          <% if params[:q].present? %><span class="badge bg-secondary">búsqueda: <%= params[:q] %></span><% end %>
+          <% if params[:tema].present? %><span class="badge bg-secondary">temática: <%= params[:tema] %></span><% end %>
+          <%= link_to "Limpiar filtros", conceptos_path, class: "ms-2" %>
+        </p>
+      <% end %>
+
+      <p class="fw-bold">Resultados <%= @conceptos.size %> de <%= @total %></p>
+
+      <% if @conceptos.any? %>
+        <table class="dspace-resultados-tabla">
+          <thead>
+            <tr>
+              <th style="width: 18%">Temática</th>
+              <th>Término</th>
+              <th style="width: 28%">Fuente</th>
+              <th class="text-end">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @conceptos.each do |c| %>
+              <tr>
+                <td class="dspace-fecha"><%= c.tema&.nombre %></td>
+                <td>
+                  <%= link_to c.termino, c, class: "dspace-titulo" %>
+                  <% if c.sinonimos.present? %>
+                    <div class="dspace-resumen">Sinónimos: <%= c.sinonimos %></div>
+                  <% end %>
+                </td>
+                <td class="dspace-autores"><%= c.fuente %></td>
+                <td class="text-end">
+                  <div class="d-flex justify-content-end gap-1">
+                    <%= link_to "Ver", c, class: "btn btn-sm btn-outline-primary" %>
+                    <% if current_user&.editor? || current_user&.admin? %>
+                      <%= link_to "Editar", edit_concepto_path(c), class: "btn btn-sm btn-outline-secondary" %>
+                      <%= button_to "Eliminar", c, method: :delete,
+                          form: { class: "d-inline mb-0" },
+                          data: { turbo_confirm: "¿Eliminar el concepto '#{c.termino}'?" },
+                          class: "btn btn-sm btn-outline-danger" %>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p class="text-muted">No hay conceptos que coincidan con los filtros.</p>
+      <% end %>
+
+      <% if @total > ConceptosController::PER_PAGINA && params[:todos].blank? %>
+        <% base_params = params.permit(:q, :tema).to_h %>
+        <div class="mt-3">
+          <p class="small text-muted mb-2">Página <%= @pagina %> de <%= @total_paginas %> · <%= @total %> conceptos</p>
+          <div class="d-flex flex-wrap align-items-center gap-2">
+            <% if @pagina > 1 %>
+              <%= link_to "← Anterior", conceptos_path(base_params.merge(page: @pagina - 1)), class: "btn btn-outline-primary btn-sm" %>
+            <% end %>
+
+            <% (1..@total_paginas).each do |n| %>
+              <% if n == @pagina %>
+                <span class="btn btn-primary btn-sm disabled"><%= n %></span>
+              <% else %>
+                <%= link_to n, conceptos_path(base_params.merge(page: n)), class: "btn btn-outline-primary btn-sm" %>
+              <% end %>
+            <% end %>
+
+            <% if @pagina < @total_paginas %>
+              <%= link_to "Siguiente →", conceptos_path(base_params.merge(page: @pagina + 1)), class: "btn btn-outline-primary btn-sm" %>
+            <% end %>
+          </div>
+          <div class="mt-2">
+            <%= link_to "Ver todos los conceptos", conceptos_path(base_params.merge(todos: 1)), class: "btn btn-primary btn-sm" %>
+          </div>
+        </div>
+      <% elsif @total > ConceptosController::PER_PAGINA && params[:todos].present? %>
+        <div class="mt-3">
+          <%= link_to "Ver por páginas", conceptos_path(params.permit(:q, :tema).to_h), class: "btn btn-outline-primary btn-sm" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-lg-3">
+    <%= render "shared/descubrir" %>
+  </div>
+</div>

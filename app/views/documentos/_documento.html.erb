@@ -1,0 +1,43 @@
+<div id="<%= dom_id documento %>">
+  <div>
+    <strong>Título:</strong> <%= documento.titulo %>
+  </div>
+
+  <div>
+    <strong>Autores:</strong> <%= documento.autores %>
+  </div>
+
+  <div>
+    <strong>Año:</strong> <%= documento.anio %>
+  </div>
+
+  <div>
+    <strong>Resumen:</strong> <%= documento.resumen %>
+  </div>
+
+  <div>
+    <strong>Referencia:</strong> <%= documento.referencia %>
+  </div>
+
+  <div>
+    <strong>Tipo:</strong> <%= t("enums.documento.tipo.#{documento.tipo}") %>
+  </div>
+
+  <div>
+    <strong>Estado:</strong> <%= t("enums.documento.estado.#{documento.estado}") %>
+  </div>
+
+  <div>
+    <strong>URL:</strong> <%= documento.url %>
+  </div>
+
+  <div>
+    <strong>DOI:</strong> <%= documento.doi %>
+  </div>
+  <% if documento.archivo.attached? && puede_descargar?(documento) %>
+    <div>
+      <%= link_to "Descargar #{etiqueta_adjunto(documento.archivo)}", descargar_documento_path(documento), class: "btn btn-primary btn-sm mt-1" %>
+    </div>
+  <% end %>
+
+</div>

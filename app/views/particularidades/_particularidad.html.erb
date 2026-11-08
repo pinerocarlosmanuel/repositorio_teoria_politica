@@ -1,0 +1,14 @@
+<div id="<%= dom_id particularidad %>">
+  <div>
+    <strong>Título:</strong> <%= particularidad.titulo %>
+  </div>
+
+  <div>
+    <strong>Descripción:</strong> <%= particularidad.descripcion %>
+  </div>
+
+  <div>
+    <strong>Sistema:</strong> <%= particularidad.sistema&.pais&.nombre %>
+  </div>
+
+</div>

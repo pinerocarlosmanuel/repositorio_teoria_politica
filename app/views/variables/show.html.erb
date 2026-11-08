@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @variable %>
+
+<div>
+  <%= link_to "Edit this variable", edit_variable_path(@variable) %> |
+  <%= link_to "Back to variables", variables_path %>
+
+  <%= button_to "Destroy this variable", @variable, method: :delete %>
+</div>

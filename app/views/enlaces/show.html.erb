@@ -1,0 +1,33 @@
+<% content_for :title, @enlace.titulo %>
+
+<% if notice %><p class="alert alert-info py-2"><%= notice %></p><% end %>
+
+<div class="dspace-content p-4">
+  <div class="dspace-migas">
+    <%= link_to "Repositorio Teoría Política", root_path %> · <%= link_to "Enlaces", enlaces_path %> · <%= @enlace.titulo %>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-start mb-3">
+    <h1 class="h3 fw-bold mb-0"><%= @enlace.titulo %></h1>
+    <div class="d-flex gap-2">
+      <%= link_to "Editar", edit_enlace_path(@enlace), class: "btn btn-outline-secondary btn-sm" %>
+      <%= button_to "Eliminar", @enlace, method: :delete, class: "btn btn-outline-danger btn-sm",
+                    form: { data: { turbo_confirm: "¿Eliminar este enlace?" } } %>
+    </div>
+  </div>
+
+  <dl class="row small">
+    <dt class="col-sm-3">Sección</dt>
+    <dd class="col-sm-9"><%= link_to @enlace.seccion.titulo, @enlace.seccion %></dd>
+    <dt class="col-sm-3">URL</dt>
+    <dd class="col-sm-9"><%= link_to @enlace.url, @enlace.url, target: "_blank", rel: "noopener" %></dd>
+    <dt class="col-sm-3">Orden</dt>
+    <dd class="col-sm-9"><%= @enlace.orden %></dd>
+    <% if @enlace.descripcion.present? %>
+      <dt class="col-sm-3">Descripción</dt>
+      <dd class="col-sm-9"><%= simple_format @enlace.descripcion %></dd>
+    <% end %>
+  </dl>
+
+  <%= link_to "← Volver a enlaces", enlaces_path, class: "btn btn-outline-primary btn-sm" %>
+</div>

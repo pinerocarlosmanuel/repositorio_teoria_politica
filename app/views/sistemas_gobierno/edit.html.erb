@@ -1,0 +1,53 @@
+<% content_for :title, "Editar sistema de gobierno" %>
+
+<div class="dspace-content p-4">
+  <div class="dspace-migas">
+    <%= link_to "Repositorio Teoría Política", root_path %> ·
+    <%= link_to "Sistemas", sistemas_path %> ·
+    <%= link_to @sistema_gobierno.nombre, sistemas_gobierno_path(@sistema_gobierno) %> · Editar
+  </div>
+  <h1 class="h3 fw-bold mb-3">Editar: <%= @sistema_gobierno.nombre %></h1>
+
+  <%= render "form", sistema_gobierno: @sistema_gobierno %>
+
+  <hr class="my-4">
+
+  <h2 class="h5 fw-bold border-bottom pb-2 mb-3">Enlaces de interés</h2>
+  <% if @sistema_gobierno.enlace_sistema_gobiernos.ordenados.any? %>
+    <ul class="list-group mb-3">
+      <% @sistema_gobierno.enlace_sistema_gobiernos.ordenados.each do |enlace| %>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span>
+            <%= link_to enlace.titulo, enlace.url, target: "_blank", rel: "noopener" %>
+            <span class="small text-muted ms-2"><%= enlace.url %></span>
+          </span>
+          <%= button_to "Eliminar", enlace, method: :delete,
+              form: { class: "d-inline mb-0" },
+              data: { turbo_confirm: "¿Eliminar el enlace '#{enlace.titulo}'?" },
+              class: "btn btn-sm btn-outline-danger" %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text-muted">Este sistema de gobierno todavía no tiene enlaces.</p>
+  <% end %>
+
+  <div class="card border-secondary mb-4">
+    <div class="card-header">Añadir un enlace a este sistema</div>
+    <div class="card-body">
+      <%= form_with model: EnlaceSistemaGobierno.new, url: sistemas_gobierno_enlace_sistema_gobiernos_path(@sistema_gobierno) do |form| %>
+        <div class="row g-2 align-items-center">
+          <div class="col-md-4">
+            <%= form.text_field :titulo, placeholder: "Título del enlace", class: "form-control form-control-sm" %>
+          </div>
+          <div class="col-md-5">
+            <%= form.text_field :url, placeholder: "https://…", class: "form-control form-control-sm" %>
+          </div>
+          <div class="col-md-3">
+            <%= form.submit "Añadir enlace", class: "btn btn-primary btn-sm" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

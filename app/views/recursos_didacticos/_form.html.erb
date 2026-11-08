@@ -1,0 +1,51 @@
+<%= form_with(model: recurso_didactico) do |form| %>
+  <% if recurso_didactico.errors.any? %>
+    <div class="alert alert-danger">
+      <h5><%= pluralize(recurso_didactico.errors.count, "error") %> impidieron guardar:</h5>
+      <ul class="mb-0">
+        <% recurso_didactico.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= form.label :titulo, class: "form-label" %>
+    <%= form.text_field :titulo, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :descripcion, class: "form-label" %>
+    <%= form.textarea :descripcion, class: "form-control", rows: 3 %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :tipo, class: "form-label" %>
+    <%= form.select :tipo, RecursoDidactico.tipos.map { |k, _| [t("enums.recurso_didactico.tipo.#{k}"), k] }, {}, class: "form-select" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :referencia, class: "form-label" %>
+    <%= form.text_field :referencia, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :url, class: "form-label" %>
+    <%= form.text_field :url, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :archivo, "Archivo adjunto", class: "form-label" %>
+    <% if recurso_didactico.archivo.attached? && recurso_didactico.persisted? %>
+      <div class="mb-1 small text-muted">
+        Archivo actual: <%= link_to recurso_didactico.archivo.filename, descargar_recurso_didactico_path(recurso_didactico) %>
+        (<%= number_to_human_size(recurso_didactico.archivo.byte_size) %>). Selecciona uno nuevo para reemplazarlo.
+      </div>
+    <% end %>
+    <%= form.file_field :archivo, class: "form-control", accept: ".pdf,.doc,.docx,.epub,.txt,.ppt,.pptx" %>
+    <div class="form-text">Formatos permitidos: PDF, DOC, DOCX, EPUB, TXT, PPT, PPTX · máx. 50 MB.</div>
+  </div>
+  <div class="mb-3">
+    <%= form.label :estado, class: "form-label" %>
+    <%= form.select :estado, RecursoDidactico.estados.map { |k, _| [t("enums.recurso_didactico.estado.#{k}"), k] }, {}, class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit "Guardar", class: "btn btn-primary" %>
+  </div>
+<% end %>

@@ -1,0 +1,287 @@
+<% content_for :title, "Análisis" %>
+
+<div class="dspace-content p-4">
+  <div class="dspace-migas">
+    <%= link_to "Repositorio Teoría Política", root_path %> · Análisis
+  </div>
+
+  <h1 class="h3 fw-bold mb-4">Análisis del repositorio</h1>
+
+  <div class="row row-cols-2 row-cols-md-5 g-3 mb-4">
+    <div class="col"><div class="card text-center h-100"><div class="card-body"><h2 class="display-6"><%= @total_conceptos %></h2><p class="text-muted mb-0 small">Conceptos</p></div></div></div>
+    <div class="col"><div class="card text-center h-100"><div class="card-body"><h2 class="display-6"><%= @total_documentos %></h2><p class="text-muted mb-0 small">Documentos</p></div></div></div>
+    <div class="col"><div class="card text-center h-100"><div class="card-body"><h2 class="display-6"><%= @total_recursos %></h2><p class="text-muted mb-0 small">Recursos</p></div></div></div>
+    <div class="col"><div class="card text-center h-100"><div class="card-body"><h2 class="display-6"><%= @total_paises %></h2><p class="text-muted mb-0 small">Países</p></div></div></div>
+    <div class="col"><div class="card text-center h-100"><div class="card-body"><h2 class="display-6"><%= @total_sistemas %></h2><p class="text-muted mb-0 small">Sistemas</p></div></div></div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="card h-100">
+        <div class="card-header fw-bold">Conceptos por tema</div>
+        <div class="card-body">
+          <% max = @conceptos_por_tema.values.max.to_f %>
+          <% @conceptos_por_tema.each do |tema, n| %>
+            <div class="mb-2">
+              <div class="d-flex justify-content-between small mb-1"><span><%= tema %></span><strong><%= n %></strong></div>
+              <div class="progress" style="height: 8px;"><div class="progress-bar" style="width: <%= ancho_porcentaje(n, max) %>%"></div></div>
+            </div>
+          <% end %>
+          <% if @conceptos_por_tema.empty? %><p class="text-muted small mb-0">Sin datos.</p><% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card h-100">
+        <div class="card-header fw-bold">Documentos por tipo</div>
+        <div class="card-body d-flex align-items-center gap-4">
+          <% if @documentos_por_tipo.any? %>
+            <div class="analisis-donut" style="background: <%= gradiente_donut(@documentos_por_tipo) %>"></div>
+            <ul class="list-unstyled mb-0 small">
+              <% @documentos_por_tipo.each_with_index do |(tipo, n), i| %>
+                <li class="d-flex align-items-center gap-2 mb-1">
+                  <span class="analisis-leyenda" style="background: <%= color_paleta(i) %>"></span>
+                  <span class="flex-grow-1"><%= t("enums.documento.tipo.#{tipo}") %></span><strong><%= n %></strong>
+                </li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p class="text-muted small mb-0">Sin datos.</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card h-100">
+        <div class="card-header fw-bold">Documentos por año</div>
+        <div class="card-body">
+          <% if @documentos_por_anio.any? %>
+            <div class="d-flex align-items-end gap-2 analisis-histograma">
+              <% max = @documentos_por_anio.values.max.to_f %>
+              <% @documentos_por_anio.each do |anio, n| %>
+                <div class="text-center flex-grow-1">
+                  <div class="analisis-columna" style="height: <%= ancho_porcentaje(n, max) * 1.8 %>px" data-n="<%= n %>"></div>
+                  <div class="small text-muted mt-1"><%= anio %></div>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <p class="text-muted small mb-0">Sin datos.</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card h-100">
+        <div class="card-header fw-bold">Recursos por tipo</div>
+        <div class="card-body d-flex align-items-center gap-4">
+          <% if @recursos_por_tipo.any? %>
+            <div class="analisis-donut" style="background: <%= gradiente_donut(@recursos_por_tipo) %>"></div>
+            <ul class="list-unstyled mb-0 small">
+              <% @recursos_por_tipo.each_with_index do |(tipo, n), i| %>
+                <li class="d-flex align-items-center gap-2 mb-1">
+                  <span class="analisis-leyenda" style="background: <%= color_paleta(i) %>"></span>
+                  <span class="flex-grow-1"><%= t("enums.recurso_didactico.tipo.#{tipo}") %></span><strong><%= n %></strong>
+                </li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p class="text-muted small mb-0">Sin datos.</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card h-100">
+        <div class="card-header fw-bold">Sistemas por tipo y país</div>
+        <div class="card-body">
+          <% if @sistemas_por_pais_tipo.any? %>
+            <% max_pais = @sistemas_por_pais_tipo.map { |_, h| h[:por_tipo].values.sum }.max.to_f %>
+            <div class="small mb-2">
+              <% Sistema.tipos.keys.each_with_index do |t, i| %>
+                <span class="me-3"><span class="analisis-leyenda d-inline-block" style="background: <%= color_paleta(i) %>"></span> <%= t("enums.sistema.tipo.#{t}") %></span>
+              <% end %>
+            </div>
+            <% @sistemas_por_pais_tipo.each do |pais, h| %>
+              <div class="mb-2">
+                <div class="d-flex justify-content-between small mb-1">
+                  <span><%= link_to pais.nombre, pais, class: "text-decoration-none" %>
+                    <span class="badge <%= h[:completos].positive? ? "bg-success" : "bg-light text-muted" %>"><%= h[:completos] %>/3 con contenido</span>
+                  </span><strong><%= h[:por_tipo].values.sum %></strong>
+                </div>
+                <div class="progress d-flex" style="height: 14px; background: #e9ecef;">
+                  <% Sistema.tipos.keys.each_with_index do |t, i| %>
+                    <% next unless h[:por_tipo][t].to_i.positive? %>
+                    <div class="progress-bar" style="width: <%= ancho_porcentaje(h[:por_tipo][t], max_pais) %>%; background-color: <%= color_paleta(i) %>;"></div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-muted small mb-0">Sin datos.</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card h-100">
+        <div class="card-header fw-bold">Países por continente</div>
+        <div class="card-body">
+          <% if @paises_por_continente.any? %>
+            <% max = @paises_por_continente.values.max.to_f %>
+            <% @paises_por_continente.each do |continente, n| %>
+              <div class="mb-2">
+                <div class="d-flex justify-content-between small mb-1"><span><%= t("enums.pais.continente.#{continente}") %></span><strong><%= n %></strong></div>
+                <div class="progress" style="height: 8px;"><div class="progress-bar bg-success" style="width: <%= ancho_porcentaje(n, max) %>%"></div></div>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-muted small mb-0">Sin datos.</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="h4 fw-bold mt-5 mb-2">Comparativa de países</h2>
+  <p class="text-muted">Marca dos o más países y pulsa <strong>Comparar</strong> para ver sus sistemas, particularidades, variables e indicadores.</p>
+
+  <div class="row g-2 mb-3">
+    <% Pais.order(:nombre).each do |pais| %>
+      <div class="col-md-4 col-lg-3">
+        <div class="form-check">
+          <input class="form-check-input cmp-check" type="checkbox" value="<%= pais.id %>" id="cmp_<%= pais.id %>">
+          <label class="form-check-label" for="cmp_<%= pais.id %>"><%= pais.nombre %></label>
+        </div>
+      </div>
+    <% end %>
+    <% if Pais.none? %>
+      <p class="text-muted">Aún no hay países registrados.</p>
+    <% end %>
+  </div>
+
+  <button type="button" id="btn-comparar" class="btn btn-primary">Comparar países</button>
+  <div id="resultado-comparativa" class="mt-4"></div>
+
+  <script>
+  (function () {
+    const contenedor = document.getElementById("resultado-comparativa");
+    const btn = document.getElementById("btn-comparar");
+    const colores = ["#0d6efd", "#6610f2", "#dc3545", "#198754", "#fd7e14", "#0dcaf0", "#6f42c1", "#ffc107"];
+
+    function escapar(texto) {
+      const div = document.createElement("div");
+      div.textContent = texto == null ? "" : String(texto);
+      return div.innerHTML;
+    }
+
+    function tablaMatriz(titulo, filas, paises, coloresDe) {
+      let html = '<div class="card mt-4"><div class="card-header fw-bold">' + titulo + '</div><div class="card-body p-0">';
+      html += '<div class="table-responsive"><table class="table table-bordered table-sm align-middle mb-0"><thead class="table-light">';
+      html += '<tr><th style="min-width:220px">' + titulo + '</th>';
+      paises.forEach(p => {
+        html += '<th class="text-center" style="min-width:110px"><span class="analisis-leyenda" style="background:' + coloresDe(p.id) + '"></span> ' + escapar(p.nombre) + '</th>';
+      });
+      html += '</tr></thead><tbody>';
+      filas.forEach(fila => {
+        const total = paises.reduce((s, p) => s + (fila[p.id] || 0), 0);
+        const exclusiva = paises.filter(p => fila[p.id] > 0).length === 1;
+        html += '<tr>';
+        html += '<td>' + escapar(fila.nombre);
+        if (exclusiva) {
+          const unico = paises.find(p => fila[p.id] > 0);
+          html += ' <span class="badge bg-warning text-dark" title="Solo presente en ' + escapar(unico.nombre) + '">exclusiva</span>';
+        }
+        if (total === 0) html += ' <span class="badge bg-light text-muted">plantilla</span>';
+        html += '</td>';
+        paises.forEach(p => {
+          const v = fila[p.id] || 0;
+          html += '<td class="text-center">' + (v > 0
+            ? '<span class="badge" style="background:' + coloresDe(p.id) + '">' + v + '</span>'
+            : '<span class="text-muted">—</span>') + '</td>';
+        });
+        html += '</tr>';
+      });
+      if (!filas.length) html += '<tr><td colspan="' + (paises.length + 1) + '" class="text-muted small text-center">Sin datos.</td></tr>';
+      html += '</tbody></table></div></div></div>';
+      return html;
+    }
+
+    btn.addEventListener("click", function () {
+      const seleccion = Array.from(document.querySelectorAll(".cmp-check:checked")).map(c => c.value);
+      if (seleccion.length < 2) {
+        contenedor.innerHTML = '<div class="alert alert-warning">Selecciona al menos dos países para comparar.</div>';
+        return;
+      }
+      fetch("<%= analisis_comparar_path %>?paises=" + encodeURIComponent(seleccion.join(",")))
+        .then(r => r.json())
+        .then(data => {
+          const paises = data.paises;
+          if (!paises.length) {
+            contenedor.innerHTML = '<div class="alert alert-info">Sin datos para los países seleccionados.</div>';
+            return;
+          }
+          const colorDe = (id) => colores[paises.findIndex(p => p.id === id) % colores.length];
+
+          let html = '<div class="card"><div class="card-header fw-bold">Resumen</div><div class="card-body p-0"><div class="table-responsive">';
+          html += '<table class="table table-bordered table-sm align-middle mb-0"><thead class="table-light"><tr><th>País</th><th>Sistemas</th><th>Particularidades</th><th>Variables</th><th>Indicadores</th></tr></thead><tbody>';
+          data.resumen.forEach(r => {
+            const pais = paises.find(p => p.id === r.id);
+            html += '<tr><td><span class="analisis-leyenda" style="background:' + colorDe(r.id) + '"></span> <strong>' + escapar(pais ? pais.nombre : r.id) + '</strong></td>'
+              + '<td>' + r.sistemas + '</td><td>' + r.particularidades + '</td>'
+              + '<td>' + r.variables + '</td><td>' + r.indicadores + '</td></tr>';
+          });
+          html += '</tbody></table></div></div></div>';
+
+          html += '<div class="card mt-4"><div class="card-header fw-bold">Sistemas por tipo: contenido lado a lado</div><div class="card-body p-0"><div class="table-responsive">';
+          html += '<table class="table table-bordered table-sm align-middle mb-0"><thead class="table-light"><tr><th style="min-width:140px">Tipo</th>';
+          paises.forEach(p => {
+            html += '<th class="text-center"><span class="analisis-leyenda" style="background:' + colorDe(p.id) + '"></span> ' + escapar(p.nombre) + '</th>';
+          });
+          html += '</tr></thead><tbody>';
+          data.tipos.forEach(t => {
+            html += '<tr><th class="text-nowrap">' + escapar(data.etiquetas[t] || t) + '</th>';
+            paises.forEach(p => {
+              const s = (data.sistemas_por_tipo[t] || {})[p.id];
+              if (!s) {
+                html += '<td class="text-center text-muted">—</td>';
+              } else {
+                const plantilla = /completar con datos|formato general/i.test(s.descripcion || "");
+                html += '<td class="small">';
+                if (plantilla) html += '<span class="badge bg-light text-muted">plantilla</span> ';
+                html += escapar(s.descripcion || "(sin descripción)");
+                html += ' <span class="badge bg-primary">' + s.particularidades + ' partic.</span></td>';
+              }
+            });
+            html += '</tr>';
+          });
+          html += '</tbody></table></div></div></div>';
+
+          const filas = (matriz) => Object.keys(matriz).map(nombre => {
+            const f = { nombre: nombre };
+            Object.keys(matriz[nombre]).forEach(pid => { f[pid] = matriz[nombre][pid]; });
+            return f;
+          }).sort((a, b) => {
+            const ta = paises.reduce((s, p) => s + (a[p.id] || 0), 0);
+            const tb = paises.reduce((s, p) => s + (b[p.id] || 0), 0);
+            return tb - ta;
+          });
+
+          html += tablaMatriz("Particularidades (n.º de variables por país)", filas(data.particularidades), paises, colorDe);
+          html += tablaMatriz("Variables (n.º de indicadores por país)", filas(data.variables), paises, colorDe);
+          html += tablaMatriz("Indicadores (presencia por país)", filas(data.indicadores), paises, colorDe);
+
+          contenedor.innerHTML = html;
+        })
+        .catch(() => {
+          contenedor.innerHTML = '<div class="alert alert-danger">Error al comparar los países.</div>';
+        });
+    });
+  })();
+  </script>
+</div>

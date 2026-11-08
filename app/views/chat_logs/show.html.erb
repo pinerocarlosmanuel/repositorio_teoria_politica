@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @chat_log %>
+
+<div>
+  <%= link_to "Edit this chat log", edit_chat_log_path(@chat_log) %> |
+  <%= link_to "Back to chat logs", chat_logs_path %>
+
+  <%= button_to "Destroy this chat log", @chat_log, method: :delete %>
+</div>

@@ -1,0 +1,20 @@
+cuba:
+  nombre: Cuba
+  continente: 0
+  region: Caribe
+  descripcion: Estado socialista de derecho.
+  destacado: true
+
+mexico:
+  nombre: México
+  continente: 0
+  region: Norteamérica
+  descripcion: República federal.
+  destacado: false
+
+espana:
+  nombre: España
+  continente: 1
+  region: Europa occidental
+  descripcion: Monarquía parlamentaria.
+  destacado: false

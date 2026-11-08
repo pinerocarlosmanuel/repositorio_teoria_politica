@@ -1,0 +1,32 @@
+<%= form_with(model: indicador) do |form| %>
+  <% if indicador.errors.any? %>
+    <div class="alert alert-danger">
+      <h5><%= pluralize(indicador.errors.count, "error") %> impidieron guardar:</h5>
+      <ul class="mb-0">
+        <% indicador.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= form.label :variable_id, class: "form-label" %>
+    <%= form.select :variable_id, options_from_collection_for_select(Variable.order(:nombre), :id, :nombre), {}, class: "form-select" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :nombre, class: "form-label" %>
+    <%= form.text_field :nombre, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :descripcion, class: "form-label" %>
+    <%= form.textarea :descripcion, class: "form-control", rows: 3 %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :metodo, class: "form-label" %>
+    <%= form.text_field :metodo, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit "Guardar", class: "btn btn-primary" %>
+  </div>
+<% end %>

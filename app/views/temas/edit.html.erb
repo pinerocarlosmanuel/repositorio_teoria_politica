@@ -1,0 +1,12 @@
+<% content_for :title, "Editing tema" %>
+
+<h1>Editing tema</h1>
+
+<%= render "form", tema: @tema %>
+
+<br>
+
+<div>
+  <%= link_to "Show this tema", @tema %> |
+  <%= link_to "Back to temas", temas_path %>
+</div>

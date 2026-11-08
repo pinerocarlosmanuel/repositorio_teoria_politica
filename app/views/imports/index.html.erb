@@ -1,0 +1,53 @@
+<% content_for :title, "Importación CSV" %>
+
+<h1 class="mb-4">Importación CSV</h1>
+<p class="text-muted">Administración. Sube un archivo CSV (UTF-8, separador <code>;</code> o <code>,</code>) con cabecera.</p>
+
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="card h-100">
+      <div class="card-header">Conceptos</div>
+      <div class="card-body">
+        <p class="small text-muted mb-3">Columnas: <code>termino,definicion,sinonimos,categoria,tema,fuente</code>.
+        Los conceptos se importan como <strong>borradores</strong>; el tema se crea si no existe.</p>
+        <%= form_with url: imports_conceptos_path, multipart: true, class: "d-flex gap-2" do |f| %>
+          <%= f.file_field :archivo, class: "form-control", accept: ".csv" %>
+          <%= f.submit "Importar conceptos", class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card h-100">
+      <div class="card-header">Países y sistemas</div>
+      <div class="card-body">
+        <p class="small text-muted mb-3">Columnas: <code>pais,continente,region,descripcion,sistema_tipo,sistema_descripcion</code>.
+        <code>continente</code>: america|europa|africa|asia|oceania; <code>sistema_tipo</code>: politico|electoral|constitucional.</p>
+        <%= form_with url: imports_paises_path, multipart: true, class: "d-flex gap-2" do |f| %>
+          <%= f.file_field :archivo, class: "form-control", accept: ".csv" %>
+          <%= f.submit "Importar países", class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if @resultado %>
+  <div class="mt-4 alert <%= @resultado[:errores].any? ? "alert-warning" : "alert-success" %>">
+    <strong>Resultado:</strong> <%= @resultado[:cargados] %> filas cargadas · <%= @resultado[:errores].size %> errores.
+  </div>
+
+  <% if @resultado[:errores].any? %>
+    <div class="card">
+      <div class="card-header">Errores por fila</div>
+      <table class="table table-sm table-striped mb-0">
+        <thead><tr><th>Fila</th><th>Error</th></tr></thead>
+        <tbody>
+          <% @resultado[:errores].each do |e| %>
+            <tr><td><%= e[:fila] %></td><td><%= e[:error] %></td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>

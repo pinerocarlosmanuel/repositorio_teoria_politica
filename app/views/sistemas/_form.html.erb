@@ -1,0 +1,28 @@
+<%= form_with(model: sistema) do |form| %>
+  <% if sistema.errors.any? %>
+    <div class="alert alert-danger">
+      <h5><%= pluralize(sistema.errors.count, "error") %> impidieron guardar:</h5>
+      <ul class="mb-0">
+        <% sistema.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= form.label :pais_id, class: "form-label" %>
+    <%= form.select :pais_id, options_from_collection_for_select(Pais.order(:nombre), :id, :nombre), {}, class: "form-select" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :tipo, class: "form-label" %>
+    <%= form.select :tipo, Sistema.tipos.map { |k, _| [t("enums.sistema.tipo.#{k}"), k] }, {}, class: "form-select" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :descripcion, class: "form-label" %>
+    <%= form.textarea :descripcion, class: "form-control", rows: 3 %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit "Guardar", class: "btn btn-primary" %>
+  </div>
+<% end %>

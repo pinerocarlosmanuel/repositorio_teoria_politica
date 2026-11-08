@@ -1,0 +1,87 @@
+<% content_for :title, "Acerca de nosotros" %>
+
+<div class="dspace-content p-4">
+  <div class="dspace-migas">
+    <%= link_to "Repositorio Teoría Política", root_path %> · Acerca de nosotros
+  </div>
+
+  <div class="acerca-wrap">
+    <div class="tabs" role="tablist">
+      <% @secciones.each do |seccion| %>
+        <button class="tab-btn <%= "active" if seccion == @secciones.first %>" data-tab="<%= dom_id(seccion) %>" role="tab">
+          <%= seccion.titulo %>
+        </button>
+      <% end %>
+    </div>
+
+    <% @secciones.each do |seccion| %>
+      <div class="tab-panel <%= "active" if seccion == @secciones.first %>" id="<%= dom_id(seccion) %>" role="tabpanel">
+        <div class="breadcrumb">Repositorio Teoría Política · <%= seccion.titulo %></div>
+        <h1><%= seccion.titulo %></h1>
+        <% if seccion.cuerpo.present? %>
+          <div class="cuerpo"><%= simple_format seccion.cuerpo %></div>
+        <% end %>
+
+        <% if seccion.enlaces_ordenados.any? %>
+          <div class="enlaces">
+            <h2>Enlaces</h2>
+            <div class="list-group">
+              <% seccion.enlaces_ordenados.each do |enlace| %>
+                <%= link_to enlace.url, class: "list-group-item list-group-item-action", target: "_blank", rel: "noopener" do %>
+                  <div class="d-flex w-100 justify-content-between align-items-center">
+                    <h3><%= enlace.titulo %></h3>
+                    <span class="small text-muted"><%= enlace.url %></span>
+                  </div>
+                  <% if enlace.descripcion.present? %>
+                    <p class="mb-0 small text-muted"><%= enlace.descripcion %></p>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= link_to "← Volver al inicio", root_path, class: "btn btn-outline-primary btn-sm mt-3" %>
+</div>
+
+<script>
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+
+<style>
+  .acerca-wrap { max-width: 820px; margin: 0 auto; }
+  .acerca-wrap .tabs {
+    display: flex; margin: 0 auto 32px; flex-wrap: wrap;
+    border-radius: 8px; overflow: hidden; width: fit-content;
+    background: var(--dspace-azul);
+  }
+  .acerca-wrap .tab-btn {
+    flex: 1; padding: 18px 16px; border: none; background: transparent;
+    font-family: inherit; font-size: 1.1rem; font-weight: 600; min-width: 220px;
+    color: rgba(255,255,255,.78); cursor: pointer; transition: .2s;
+    border-bottom: 3px solid transparent; position: relative;
+  }
+  .acerca-wrap .tab-btn:hover { background: rgba(255,255,255,.08); color: #fff; }
+  .acerca-wrap .tab-btn.active {
+    background: rgba(255,255,255,.15); color: #fff;
+    border-bottom-color: #ffc107;
+  }
+  .acerca-wrap .tab-panel { display: none; }
+  .acerca-wrap .tab-panel.active { display: block; }
+  .acerca-wrap .tab-panel .breadcrumb { font-size: 1rem; color: #64748b; margin-bottom: 10px; }
+  .acerca-wrap .tab-panel h1 { font-size: 2.3rem; font-weight: 700; color: #0f172a; margin-bottom: 24px; }
+  .acerca-wrap .tab-panel .cuerpo p { font-size: 1.2rem; line-height: 1.8; color: #475569; max-width: 680px; }
+  .acerca-wrap .tab-panel .enlaces { margin-top: 26px; }
+  .acerca-wrap .tab-panel .enlaces h2 { font-size: 1.25rem; font-weight: 700; color: #1e293b; margin-bottom: 14px; }
+  .acerca-wrap .tab-panel .enlaces h3 { font-size: 1.1rem; margin-bottom: 2px; }
+</style>

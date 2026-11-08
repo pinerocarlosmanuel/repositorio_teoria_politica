@@ -1,0 +1,24 @@
+cuba_politico:
+  tipo: 0
+  descripcion: Estado socialista de derecho y justicia social.
+  pais: cuba
+
+cuba_electoral:
+  tipo: 1
+  descripcion: Voto libre, igual, directo y secreto.
+  pais: cuba
+
+cuba_constitucional:
+  tipo: 2
+  descripcion: Constitución de 2019.
+  pais: cuba
+
+mexico_politico:
+  tipo: 0
+  descripcion: República federal representativa.
+  pais: mexico
+
+espana_constitucional:
+  tipo: 2
+  descripcion: Constitución de 1978.
+  pais: espana
